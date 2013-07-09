@@ -4,9 +4,11 @@ source 'https://rubygems.org'
 gem 'rails'
 
 # database for Active Record
-gem 'pg'
+#gem 'pg'
+gem 'sqlite3'
 
 gem 'devise'
+gem 'protected_attributes'
 
 group :development, :test do
   gem 'rspec-rails'
