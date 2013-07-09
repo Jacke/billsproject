@@ -6,6 +6,7 @@ gem 'rails'
 # database for Active Record
 gem 'pg'
 
+gem 'devise'
 
 group :development, :test do
   gem 'rspec-rails'
