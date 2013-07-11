@@ -1,0 +1,26 @@
+%section.header
+  %h1 Сотрудники
+  .control-content
+    = link_to '', new_employee_path, class: 'fui-plus'
+%table.table
+  %tr
+    %th ФИО
+    %th Электропочта
+    %th Телефон
+    %th Админ?
+    %th
+    %th
+    %th
+
+  - @employees.each do |employee|
+    %tr
+      %td= employee.name
+      %td= employee.email
+      %td= employee.phone
+      %td= employee.admin
+      %td= link_to 'Редактировать', edit_employee_path(employee)
+      %td= link_to 'Удалить', employee, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+

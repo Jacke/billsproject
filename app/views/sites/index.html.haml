@@ -2,20 +2,14 @@
   %h1 Точки
   .control-content
     = link_to '', new_site_path, class: 'fui-plus'
-%table.table
-  %tr
-    %th Название
-    %th Адрес
-    %th
-    %th
-    %th
 
-  - @sites.each do |site|
-    %tr
-      %td= site.name
-      %td= site.direction
-      %td= link_to 'Редактировать', edit_site_path(site)
-      %td= link_to 'Удалить', site, :method => :delete, :data => { :confirm => 'Are you sure?' }
+- @sites.each do |site|
+  %div.site
+    %h3.tile-title= site.name
+    %p= site.direction
+
+    = link_to '', edit_site_path(site), class: 'fui-new'
+    = link_to '', site, class: 'fui-cross', :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 %br
 
