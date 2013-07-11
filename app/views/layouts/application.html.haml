@@ -6,10 +6,23 @@
     = javascript_include_tag "application"
     = csrf_meta_tags
   %body
-    %p.notice= notice
-    %p.alert= alert
-    #container
-      #user_nav
+    / / %p= notice
+    / / %p= alert
+    %header.container
+      .navbar.navbar-inverse.span4
+        .navbar-inner
+          .container
+            #nav-collapse-01.nav-collapse.collapse
+              %ul.nav
+                %li
+                  = link_to 'Точки', sites_path
+                %li.active
+                  = link_to 'Сотрудники', employees_path
+                %li
+                  %a{:href => "#fakelink"}
+                    Тест
+            / /.nav
+      .user_nav
         - if employee_signed_in?
           Logged in as
           = succeed "." do
@@ -17,8 +30,10 @@
           = link_to 'Edit profile', edit_employee_registration_path
           = link_to "Logout", destroy_employee_session_path, method: :delete
         - else
-          = link_to "Sign up", new_employee_registration_path
-          = link_to "Login", new_employee_session_path
-
-    = yield
+        .span1
+          = link_to "Рега", new_employee_registration_path, class: 'btn btn-large btn-block btn-primary'
+        .span1
+          = link_to "Вход", new_employee_session_path, class: 'btn btn-large btn-block btn-primary'
+    %main.container
+      = yield
 

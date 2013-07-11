@@ -1,12 +1,12 @@
 %p#notice= notice
 
 %p
-  %b Name:
+  %b Название:
   = @site.name
 %p
-  %b Direction:
+  %b Адрес:
   = @site.direction
 
-= link_to 'Edit', edit_site_path(@site)
+= link_to 'Редактировать', edit_site_path(@site)
 \|
-= link_to 'Back', sites_path
+= link_to 'Назад', sites_path

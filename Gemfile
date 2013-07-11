@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 
 gem 'rails'
+gem 'pry-rails'
 
 # database for Active Record
 #gem 'pg'
@@ -23,6 +24,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'flatui-rails'
+gem "font-awesome-rails"
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
