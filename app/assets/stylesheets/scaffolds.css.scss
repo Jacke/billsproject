@@ -92,11 +92,43 @@ section.header {
 .control-content {
 position: absolute;
 right: 1%;
-top: 55%;
+top: 15%;
+  a {
+  	color: #27ae60;
+  	font-size: 17px;
+  }
+  a:hover {
+  	background: none;
+  	color: #2ecc71;
+  }
 }
 .form .actions.span4 {
 margin-left: 0px;
+padding-top: 25px;
 }
+.site {
+background-color: #7F8C8D;
+border-radius: 6px;
+padding: 14px;
+position: relative;
+text-align: center;
+display: inline-block;
+color: #FFF;
+  a { color: #FFF;
+			font-size: 15px;
+			margin-right: 6px;
+			margin-left: 6px; }
+	h3 {
+		font-size: 20px;
+		margin: 0;
+	}
+	p {
+		font-size: 15px;
+		margin-bottom: 33px;
+	}
+}
+
+
 
 
 /* Icons */

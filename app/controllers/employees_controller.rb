@@ -6,17 +6,22 @@ class EmployeesController < ApplicationController
 
   def new
     @employee = Employee.new
+    render "_form"
   end
 
   def edit
-    @employee = Employees.find(params[:id])
+    @employee = Employee.find(params[:id])
+    render "_form"
   end
 
   def create
-    @employee = Employees.new(params[:employee])
+    @employee = Employee.new(params[:employee])
     # @employee.payrate = (@employee.payrate/100)
-    @employee.save
-    redirect_to employees_url, notice: "Employee successfully created."
+    if @employee.save
+      redirect_to employees_url, notice: "Сотрудник создан."
+    else
+      redirect_to employees_url, warning: "Something wrong" 
+    end
   end
   def show
       @employee = Employee.find(params[:id])
@@ -26,12 +31,16 @@ class EmployeesController < ApplicationController
     @employee = Employee.find(params[:id])
     @employee.update_attributes(params[:employee])
     @employee.save
-    redirect_to employees_url, notice: "Employee successfully updated."
+    if @employee.save
+      redirect_to employees_url, notice: "Сотрудник обновлен."
+    else
+      redirect_to employees_url, warning: "Something wrong" 
+    end
   end
   
   def destroy
     @employee = Employee.find(params[:id])
     @employee.destroy
-    redirect_to employees_url, notice: "Employee deleted."
+    redirect_to employees_url, notice: "Сотрудник удален."
   end
 end

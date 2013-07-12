@@ -14,10 +14,18 @@
           .container
             #nav-collapse-01.nav-collapse.collapse
               %ul.nav
-                %li
-                  = link_to 'Точки', sites_path
-                %li.active
-                  = link_to 'Сотрудники', employees_path
+                - if controller?("sites")
+                  %li.active
+                    = link_to 'Точки', sites_path
+                - else 
+                  %li
+                    = link_to 'Точки', sites_path
+                - if controller?("employees")
+                  %li.active
+                    = link_to 'Сотрудники', employees_path
+                - else 
+                  %li
+                    = link_to 'Сотрудники', employees_path
                 %li
                   %a{:href => "#fakelink"}
                     История

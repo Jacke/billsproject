@@ -22,8 +22,20 @@
     .field
       = f.label :password_confirmation
       = f.password_field :password_confirmation  
-    .field
-      = f.label :admin
-      = f.check_box :admin
+    .field.clearfix
+      = f.label "Точки"
+      .control-group.columns4.checkbox-group
+        .controls
+          - hidden_field_tag "employee[site_ids][]", nil
+          - Site.all.each do |site|
+            %label.checkbox.inline
+              = check_box_tag "employee[site_ids][]", site.id, @employee.site_ids.include?(site.id), id: "inlineCheckbox#{dom_id(site)}"
+              = label_tag dom_id(site), site.name
+    .field.clearfix
+      .control-group.columns4.checkbox-group
+        .controls
+          %label.checkbox.inline
+            = f.check_box :admin, id: "inlineCheckbox"
+            = f.label :admin
     .actions.span4
       = f.submit 'Save', class: 'btn btn-large btn-block btn-success clearfix'
