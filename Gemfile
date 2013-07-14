@@ -5,8 +5,8 @@ gem 'rails'
 gem 'pry-rails'
 
 # database for Active Record
-gem 'pg'
-#gem 'sqlite3'
+#gem 'pg'
+gem 'sqlite3'
 
 gem 'devise'
 gem 'protected_attributes'
