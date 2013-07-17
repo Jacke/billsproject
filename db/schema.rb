@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130711234346) do
+ActiveRecord::Schema.define(version: 20130715054922) do
 
   create_table "appointments", force: true do |t|
     t.integer  "employee_id"
@@ -41,11 +41,36 @@ ActiveRecord::Schema.define(version: 20130711234346) do
   add_index "employees", ["email"], name: "index_employees_on_email", unique: true
   add_index "employees", ["reset_password_token"], name: "index_employees_on_reset_password_token", unique: true
 
+  create_table "shift_row_assigns", force: true do |t|
+    t.integer  "row_id"
+    t.integer  "def"
+    t.integer  "shift_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "shift_rows", force: true do |t|
+    t.string   "title"
+    t.integer  "row_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "shifts", force: true do |t|
+    t.integer  "site_id"
+    t.integer  "employee_id"
+    t.integer  "balance"
+    t.integer  "expenses"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "sites", force: true do |t|
     t.string   "name"
     t.text     "direction"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "shiftstatus", default: false
   end
 
 end

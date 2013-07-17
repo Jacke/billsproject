@@ -1,0 +1,21 @@
+%h1= "Точка #{@site.name}"
+%div= "Статус #{aval?(@status)} к приему"
+= link_to "Смена", new_shift_path(site: @site.id)
+
+%table.table
+  %tr
+    %th Точка
+    %th Сотрудник
+    %th Баланс
+    %th Расход
+    %th
+
+  - @shifts.each do |shift|
+    %tr
+      %td= shift.site_id
+      %td= shift.employee_id
+      %td= shift.balance
+      %td= shift.expenses
+      %td= link_to 'Destroy', shift, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br

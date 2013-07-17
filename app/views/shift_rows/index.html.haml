@@ -1,0 +1,19 @@
+%h1 Ячейки
+
+%table
+  %tr
+    %th
+    %th
+    %th
+
+  - @rows.each do |row|
+    %tr
+      %td= row.title
+      %td= row.row_type
+      %td= link_to 'Show', row
+      %td= link_to 'Edit', edit_shift_row_path(row)
+      %td= link_to 'Destroy', row, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Row', new_shift_row_path
