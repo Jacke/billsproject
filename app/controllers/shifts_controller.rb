@@ -9,12 +9,12 @@ def index
 end
 
 def new
-	if @site.shiftstatus
-		@shift = Shift.where(site_id: @shift.id).last 
-  else
-  	accept_shift
-  	Shift.new(employee_id: 1)
-  	redirect_to shifts_path(site: @site.id)
+	if @site.shiftstatus # Cancel shift
+		@shift = Shift.where(site_id: @site.id).last 
+  else 								 # Accept shift
+  	@shift = Shift.new(employee_id: 1, site_id: @site.id)
+  	accept_shift if @shift.save
+  	redirect_to shifts_path(site: @site.id) 
   end
 end
 
@@ -24,13 +24,19 @@ def create
  redirect_to shifts_path(site: @site.id)
 end
 
+def update
+ @shift = Shift.find(params[:id])
+ @site = Site.find(params[:shift]["site_id"])
+ accept_shift if @shift.update(params[:shift]) 
+ redirect_to shifts_path(site: @site.id)
+end
 
 private
 def accept_shift; change_bool; end
 def cancel_shift; change_bool; end
 
 def set_site
-   @site = Site.find(params[:site]) if params[:site]
+   @site = Site.find(params[:site]) if params[:site] 
    #@site = Site.find(params[:shift][:site_id]) if params[:shift][:site_id] && @site
 end
 

@@ -5,7 +5,7 @@
 
 - @sites.each do |site|
   %div.site
-    %h3.tile-title= site.name
+    %h3.tile-title= link_to "#{site.name}", shifts_path(site: site.id)
     %p= site.direction
 
     = link_to '', edit_site_path(site), class: 'fui-new'

@@ -29,6 +29,8 @@
                 %li
                   %a{:href => "#fakelink"}
                     История
+                %li
+                  = link_to 'Rows', shift_rows_path
             / /.nav
       .user_nav
         - if employee_signed_in?
