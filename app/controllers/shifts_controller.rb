@@ -26,9 +26,13 @@ end
 
 def update
  @shift = Shift.find(params[:id])
- @site = Site.find(params[:shift]["site_id"])
  accept_shift if @shift.update(params[:shift]) 
  redirect_to shifts_path(site: @site.id)
+end
+
+def revert_shift # REVERT FEATURE
+	@shift = Shift.find(params[:id])
+  redirect_to edit_shift_path(@shift)
 end
 
 private
@@ -36,8 +40,8 @@ def accept_shift; change_bool; end
 def cancel_shift; change_bool; end
 
 def set_site
-   @site = Site.find(params[:site]) if params[:site] 
-   #@site = Site.find(params[:shift][:site_id]) if params[:shift][:site_id] && @site
+	 params[:site].present? ? site = params[:site] : site = params[:shift]["site_id"] # New shift or Shift in form
+   @site = Site.find(site)
 end
 
 def change_bool

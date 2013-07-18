@@ -30,7 +30,6 @@ class EmployeesController < ApplicationController
   def update
     @employee = Employee.find(params[:id])
     @employee.update_attributes(params[:employee])
-    @employee.save
     if @employee.save
       redirect_to employees_url, notice: "Сотрудник обновлен."
     else

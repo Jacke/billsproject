@@ -5,5 +5,5 @@ class Site < ActiveRecord::Base
   has_many :appointments
 
   has_many :employees, through: :appointments 
-  has_many :shifts, through: :shiftrowassigns  
+  has_many :shifts
 end

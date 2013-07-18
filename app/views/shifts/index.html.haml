@@ -11,13 +11,17 @@
     %th Сотрудник
     %th Баланс
     %th Расход
+    %th Принято
+    %th= "Закрыто" unless @shifts.created_at == @shifts.updated_at
     / / %th
   - if @shifts
     %tr
-      %td= @shifts.site_id
-      %td= @shifts.employee_id
+      %td= @shifts.site.name
+      %td= @shifts.employee.name
       %td= @shifts.balance
       %td= @shifts.expenses
+      %td= @shifts.created_at
+      %td= @shifts.updated_at unless @shifts.created_at == @shifts.updated_at
       / / %td= link_to 'Destroy', @shifts, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 %br
