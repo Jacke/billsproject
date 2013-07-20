@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130720222502) do
+ActiveRecord::Schema.define(version: 20130720223530) do
 
   create_table "appointments", force: true do |t|
     t.integer  "employee_id"
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20130720222502) do
   end
 
   create_table "shift_row_assigns", force: true do |t|
-    t.integer  "row_id"
+    t.integer  "shift_row_id"
     t.integer  "def"
     t.integer  "shift_id"
     t.datetime "created_at"
