@@ -9,6 +9,7 @@
 #  till        :integer
 #  created_at  :datetime
 #  updated_at  :datetime
+#  comment     :text
 #
 
 require 'spec_helper'
