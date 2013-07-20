@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 
 gem 'rails'
 gem 'pry-rails'
+gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'
 
 # database for Active Record
 #gem 'pg'

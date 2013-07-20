@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/ctran/annotate_models.git
+  revision: 18a4e2eb77c8f3ef695b563e4a7ca45dfede819b
+  specs:
+    annotate (2.6.0.beta2)
+      activerecord (>= 2.3.0)
+      rake (>= 0.8.7)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -175,6 +183,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  annotate!
   coffee-rails (~> 4.0.0)
   cucumber
   debugger

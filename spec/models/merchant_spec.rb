@@ -9,11 +9,8 @@
 #  updated_at  :datetime
 #
 
-class Merchant < ActiveRecord::Base
-	attr_accessible :employee_id, :deposit
+require 'spec_helper'
 
-  # Associations
-	belongs_to :employee 
-	has_many :merchant_cashouts
-
+describe Merchant do
+  pending "add some examples to (or delete) #{__FILE__}"
 end

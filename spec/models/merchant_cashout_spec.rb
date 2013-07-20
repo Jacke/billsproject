@@ -1,18 +1,16 @@
 # == Schema Information
 #
-# Table name: shifts
+# Table name: merchant_cashouts
 #
 #  id          :integer          not null, primary key
-#  site_id     :integer
-#  employee_id :integer
-#  balance     :integer
-#  till        :integer
+#  merchant_id :integer
+#  cashout_sum :integer
 #  created_at  :datetime
 #  updated_at  :datetime
 #
 
 require 'spec_helper'
 
-describe Shift do
+describe MerchantCashout do
   pending "add some examples to (or delete) #{__FILE__}"
 end
