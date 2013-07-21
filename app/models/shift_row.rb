@@ -23,13 +23,13 @@ TYPES = [
 	ShiftRow::TYPES.each do |row_name, id|
 	  scope "#{row_name}_type".to_sym, -> { where(row_type: id) }
 	end
-	
+
   attr_accessible :title, :row_type
 
 	# Associations
 	has_many :shift_row_assigns 
 	has_many :shifts, through: :shift_row_assigns   
- 
+  accepts_nested_attributes_for :shifts, :shift_row_assigns
  def rowtype # Return type of row in human language
     ShiftRow::TYPES.find_all{|row_name, id| id == self.row_type}.flatten.first
  end

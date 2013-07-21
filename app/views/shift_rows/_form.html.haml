@@ -10,6 +10,7 @@
     = f.text_field :title
   .field
     = f.label :row_type
-    = f.number_field :row_type
+    = f.select :row_type, ShiftRow::TYPES
+
   .actions
     = f.submit 'Save'

@@ -11,6 +11,7 @@
     %th Сотрудник
     %th Баланс
     %th Расход
+    %th Комментарий
     %th Принято
     %th= "Закрыто" unless @shifts.created_at == @shifts.updated_at
     / / %th
@@ -19,7 +20,8 @@
       %td= @shifts.site.name
       %td= @shifts.employee.name
       %td= @shifts.balance
-      %td= @shifts.expenses
+      %td= @shifts.till
+      %td= @shifts.comment
       %td= @shifts.created_at
       %td= @shifts.updated_at unless @shifts.created_at == @shifts.updated_at
       / / %td= link_to 'Destroy', @shifts, :method => :delete, :data => { :confirm => 'Are you sure?' }

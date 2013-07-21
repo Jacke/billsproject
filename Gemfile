@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 gem 'rails'
 gem 'pry-rails'
 gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'
+gem "nested_form", :git => 'https://github.com/ryanb/nested_form.git'
 
 # database for Active Record
 #gem 'pg'

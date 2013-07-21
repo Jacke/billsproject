@@ -11,7 +11,7 @@
 #
 
 class ShiftRowAssign < ActiveRecord::Base
-
+  attr_accessible :shift_id, :shift_row_id, :def
   # Associations
 	belongs_to :shift_row
 	belongs_to :shift

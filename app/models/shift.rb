@@ -13,12 +13,23 @@
 #
 
 class Shift < ActiveRecord::Base
-  attr_accessible :shiftstatus, :site_id, :employee_id, :balance, :expenses
-	
+  attr_accessible :shiftstatus, 
+								  :site_id, 
+								  :employee_id, 
+								  :balance, 
+								  :till, 
+								  :comment,
+								  :shift_rows_attributes, 
+								  :shift_row_assigns_attributes
+
+	ShiftRow::TYPES.each do |row_name, id|
+	  scope "#{row_name}_row".to_sym, -> { where(row_type: id) }
+	end
 	# Associations
 	has_many :shift_row_assigns 
 	has_many :shift_rows, through: :shift_row_assigns  
 	belongs_to :employee
 	belongs_to :site
-
+	accepts_nested_attributes_for :shift_rows, :shift_row_assigns
+	
 end

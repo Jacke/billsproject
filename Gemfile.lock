@@ -6,6 +6,12 @@ GIT
       activerecord (>= 2.3.0)
       rake (>= 0.8.7)
 
+GIT
+  remote: https://github.com/ryanb/nested_form.git
+  revision: 42028bc06e72a848d297edc1467a969a7c9def57
+  specs:
+    nested_form (0.3.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -193,6 +199,7 @@ DEPENDENCIES
   haml-rails (~> 0.4)
   jbuilder (~> 1.0.1)
   jquery-rails
+  nested_form!
   protected_attributes
   pry-rails
   rails
