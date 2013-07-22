@@ -22,9 +22,14 @@ class Shift < ActiveRecord::Base
 								  :shift_rows_attributes, 
 								  :shift_row_assigns_attributes
 
-	ShiftRow::TYPES.each do |row_name, id|
-	  scope "#{row_name}_row".to_sym, -> { where(row_type: id) }
-	end
+def self.row_scope(name, body)
+  send(:define_method, name, &body)
+end
+
+ShiftRow::TYPES.each do |rnm, rid|
+row_scope "#{rnm}_vls".downcase.to_sym, ->(o = self) { ShiftRowAssign.joins(:shift_row).where(shift_rows: { row_type: rid }, shift_id: o.id).pluck(:def) } 
+end	  
+
 	# Associations
 	has_many :shift_row_assigns 
 	has_many :shift_rows, through: :shift_row_assigns  
