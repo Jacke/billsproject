@@ -19,22 +19,23 @@
   .field
     = f.label :comment
     = f.text_field :comment
-    = f.fields_for :shift_row_assigns do |default_row|
+    = f.fields_for :shift_row_assigns, class: 'default_fields' do |default_row|
       .field
-        = default_row.label :shift_row_id
-        = default_row.number_field :shift_row_id, value: 7
+        = default_row.label "Обязательная ячейка"
+        %strong= @rows.find(4).title
+        = f.hidden_field :shift_row_id, value: 4
       .field
-        = default_row.label :def
-        = default_row.number_field :def, value: 7
-    = f.fields_for :shift_row_assigns do |shift_row|
-      .field
-        = shift_row.label :shift_row_id
-        = shift_row.number_field :shift_row_id
-      .field
-        = shift_row.label :def
-        = shift_row.number_field :def
-      = shift_row.link_to_remove "Удалить поле"
+        = default_row.label "Значение"
+        = default_row.number_field :def, value: 4
+
+      = f.fields_for :shift_row_assigns do |shift_row|
+        .field.row_select
+          = shift_row.label :shift_row_id 
+          = select("shift_row_assigns", "shift_row_id", @rows.collect {|r| [ "#{r.title} : #{r.rowtype}", r.id ] })
+        .field
+          = shift_row.label "Значение"
+          = shift_row.number_field :def
+        = shift_row.link_to_remove "Удалить поле"
     = f.link_to_add "Добавить поле", :shift_row_assigns
-  .actions
-    = f.submit 'Save'
-= @shift.shift_row_assigns
+  .actions.span4
+    = f.submit 'Save', class: 'btn btn-large btn-block btn-success clearfix'

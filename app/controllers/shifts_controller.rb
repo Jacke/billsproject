@@ -9,6 +9,7 @@ def index
 end
 
 def new
+	  @rows = ShiftRow.where(site_id: nil)
 	if @site.shiftstatus # Cancel shift
 		@shift = Shift.where(site_id: @site.id).last 
 		@shift.shift_row_assigns.build
@@ -22,13 +23,13 @@ end
 def create
  @shift = Shift.new(params[:shift]) 
  cancel_shift if @shift.save
- redirect_to shifts_path(site: @site.id), notice: "#{params[:shift]}"
+ redirect_to shifts_path(site: @site.id)
 end
 
 def update
  @shift = Shift.find(params[:id])
  accept_shift if @shift.update(params[:shift]) 
- redirect_to shifts_path(site: @site.id), notice: "#{params[:shift]}"
+ redirect_to shifts_path(site: @site.id)
 end
 
 def revert_shift # REVERT FEATURE
