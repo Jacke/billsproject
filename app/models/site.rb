@@ -11,7 +11,7 @@
 #
 
 class Site < ActiveRecord::Base
-  attr_accessible :name, :direction
+  attr_accessible :name, :direction, :shiftstatus
   
 
   has_many :appointments

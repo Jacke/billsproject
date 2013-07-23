@@ -9,8 +9,8 @@
   %tr
     %th Точка
     %th Сотрудник
-    %th Баланс
-    %th Расход
+    %th Баланс старт
+    %th Касса
     %th Комментарий
     - @shifts.shift_row_assigns.each do |as|
       %td= as.shift_row.title if as.shift_row.present?
@@ -32,3 +32,4 @@
       / / %td= link_to 'Destroy', @shifts, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 %br
+= Shift.current_site

@@ -1,6 +1,7 @@
 class ShiftsController < ApplicationController
 before_filter :set_site #, only: %w(index)
 
+before_filter :set_current_site
 
 def index
   redirect_to sites_path unless @site
@@ -9,27 +10,33 @@ def index
 end
 
 def new
-	  @rows = ShiftRow.where(site_id: nil)
 	if @site.shiftstatus # Cancel shift
 		@shift = Shift.where(site_id: @site.id).last 
 		@shift.shift_row_assigns.build
   else 								 # Accept shift
   	@shift = Shift.new(employee_id: 1, site_id: @site.id)
-  	accept_shift if @shift.save
-  	redirect_to shifts_path(site: @site.id) 
+  	render "accept"
   end
 end
 
 def create
  @shift = Shift.new(params[:shift]) 
- cancel_shift if @shift.save
+ change_bool if @shift.save
  redirect_to shifts_path(site: @site.id)
 end
 
 def update
  @shift = Shift.find(params[:id])
- accept_shift if @shift.update(params[:shift]) 
+ if @shift.update(params[:shift]) 
+ 	  change_bool
+ 	  @shift.update_attributes(till: @shift.till_calc)
+ end
  redirect_to shifts_path(site: @site.id)
+end
+
+def set_current_site
+  #  set @current_account from session data here
+  Shift.current_site = @site.shiftstatus
 end
 
 def revert_shift # REVERT FEATURE
@@ -38,8 +45,6 @@ def revert_shift # REVERT FEATURE
 end
 
 private
-def accept_shift; change_bool; end
-def cancel_shift; change_bool; end
 
 def set_site
 	 params[:site].present? ? site = params[:site] : site = params[:shift]["site_id"] # New shift or Shift in form
