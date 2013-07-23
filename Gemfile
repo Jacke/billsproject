@@ -9,7 +9,7 @@ gem "nested_form", :git => 'https://github.com/ryanb/nested_form.git'
 # database for Active Record
 #gem 'pg'
 gem 'sqlite3'
-
+gem 'sourcify'
 gem 'devise'
 gem 'protected_attributes'
 

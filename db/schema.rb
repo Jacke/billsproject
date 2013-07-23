@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130720223530) do
+ActiveRecord::Schema.define(version: 20130723111735) do
 
   create_table "appointments", force: true do |t|
     t.integer  "employee_id"
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 20130720223530) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "comment"
+    t.integer  "percent"
   end
 
   create_table "sites", force: true do |t|
