@@ -7,8 +7,8 @@ gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'
 gem "nested_form", :git => 'https://github.com/ryanb/nested_form.git'
 
 # database for Active Record
-#gem 'pg'
-gem 'sqlite3'
+gem 'pg'
+#gem 'sqlite3'
 gem 'sourcify'
 gem 'devise'
 gem 'protected_attributes'

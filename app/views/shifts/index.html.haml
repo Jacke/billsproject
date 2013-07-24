@@ -4,32 +4,32 @@
     %li= "Статус #{aval?(@status)} к приему"
     %li
       = link_to "Смена", new_shift_path(site: @site.id)
-
-%table.table
-  %tr
-    %th Точка
-    %th Сотрудник
-    %th Баланс старт
-    %th Касса
-    %th Комментарий
-    - @shifts.shift_row_assigns.each do |as|
-      %th= as.shift_row.title if as.shift_row.present?
-    %th Принято
-    %th= "Закрыто" unless @shifts.created_at == @shifts.updated_at
-    / / %th
-  - if @shifts
+- if @shifts
+  %table.table
     %tr
-      %td= @shifts.site.name
-      %td= @shifts.employee.name
-      %td= @shifts.balance
-      %td= @shifts.till
-      %td= @shifts.comment
+      %th Точка
+      %th Сотрудник
+      %th Баланс старт
+      %th Касса
+      %th Комментарий
       - @shifts.shift_row_assigns.each do |as|
-        %td= as.def
+        %th= as.shift_row.title if as.shift_row.present?
+      %th Принято
+      %th= "Закрыто" unless @shifts.created_at == @shifts.updated_at
+      / / %th
+    - if @shifts
+      %tr
+        %td= @shifts.site.name
+        %td= @shifts.employee.name
+        %td= @shifts.balance
+        %td= @shifts.till
+        %td= @shifts.comment
+        - @shifts.shift_row_assigns.each do |as|
+          %td= as.def
 
-      %td= @shifts.created_at
-      %td= @shifts.updated_at unless @shifts.created_at == @shifts.updated_at
-      / / %td= link_to 'Destroy', @shifts, :method => :delete, :data => { :confirm => 'Are you sure?' }
+        %td= @shifts.created_at
+        %td= @shifts.updated_at unless @shifts.created_at == @shifts.updated_at
+        / / %td= link_to 'Destroy', @shifts, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
-%br
+  %br
 = Shift.current_site
