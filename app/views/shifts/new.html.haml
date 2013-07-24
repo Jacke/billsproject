@@ -28,7 +28,7 @@
     = f.fields_for :shift_row_assigns do |shift_row|
       .field.row_select
         = shift_row.label :shift_row_id 
-        = shift_row.select :shift_row_id, options_for_select([['Инкассация', 4], ['Хоз расходы', 5], ['Доп. расходы', 6]])
+        = shift_row.select :shift_row_id, options_for_select([["Баланс 2 : Balance", 1],["Зп сейчас : CashoutNow", 2], ["Инкассация взял : EncashmentIn", 3], ["Инкассация довез : EncashmentOut", 4], ["Хоз расходы : Expenses", 5]])
         =# select_tag(:shift_row_id, options_for_select(@rows.collect {|r| [ "#{r.title} : #{r.rowtype}", r.id ] }))
       .field
         = shift_row.label "Значение"
