@@ -13,7 +13,7 @@
     %th Касса
     %th Комментарий
     - @shifts.shift_row_assigns.each do |as|
-      %td= as.shift_row.title if as.shift_row.present?
+      %th= as.shift_row.title if as.shift_row.present?
     %th Принято
     %th= "Закрыто" unless @shifts.created_at == @shifts.updated_at
     / / %th

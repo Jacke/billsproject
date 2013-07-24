@@ -11,7 +11,9 @@
 #  updated_at  :datetime
 #  comment     :text
 #
-
+# TODO: Move methods to concerns
+# TODO: Remade collection method (One line request, instance var assignment)
+# TODO: Callback cleaning up
 class Shift < ActiveRecord::Base
 	cattr_accessor :current_site
 	before_save :old_values_collect
@@ -56,13 +58,13 @@ end
 
  # instance methods
 
-  def old_values_collect # that set initially 
+  def old_values_collect 
        @init_balance = self.balance
        @init_till = self.till # Define by admin at begining
   end
 
   def row_collect # that set after cancel shift
-   balance = self.balance_vls.inject(:+).to_i # it's new balance variables
+   balance = self.balance_vls.inject(:+).to_i 
    @balance_diff = @init_balance - balance # Diff for init balance and new(for all rows)
    
    @cashout = self.cashoutnow_vls.inject(:+)

@@ -1,3 +1,5 @@
+# TODO: Clean up actions
+# TODO: Check for @caattr safety
 class ShiftsController < ApplicationController
 before_filter :set_site #, only: %w(index)
 
