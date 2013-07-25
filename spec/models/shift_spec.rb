@@ -10,6 +10,7 @@
 #  created_at  :datetime
 #  updated_at  :datetime
 #  comment     :text
+#  percent     :integer
 #
 
 require 'spec_helper'

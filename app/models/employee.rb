@@ -4,7 +4,7 @@
 #
 #  id                     :integer          not null, primary key
 #  name                   :string(255)
-#  phone                  :integer
+#  phone                  :string(255)
 #  admin                  :boolean
 #  email                  :string(255)      default(""), not null
 #  encrypted_password     :string(128)      default(""), not null

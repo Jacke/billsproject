@@ -10,6 +10,21 @@
 #  created_at  :datetime
 #  updated_at  :datetime
 #  comment     :text
+#  percent     :integer
+#
+
+# == Schema Information
+#
+# Table name: shifts
+#
+#  id          :integer          not null, primary key
+#  site_id     :integer
+#  employee_id :integer
+#  balance     :integer
+#  till        :integer
+#  created_at  :datetime
+#  updated_at  :datetime
+#  comment     :text
 #
 # TODO: Move methods to concerns
 # TODO: Remade collection method (One line request, instance var assignment)

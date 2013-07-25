@@ -11,3 +11,4 @@ PM(merchant)
 History(edit,revert)
 Callcack for deposit
 Default values in DB
+Fix integer in db
