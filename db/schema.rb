@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130723111735) do
+ActiveRecord::Schema.define(version: 20130725142305) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "appointments", force: true do |t|
     t.integer  "employee_id"
@@ -22,7 +25,7 @@ ActiveRecord::Schema.define(version: 20130723111735) do
 
   create_table "employees", force: true do |t|
     t.string   "name"
-    t.integer  "phone"
+    t.string   "phone"
     t.boolean  "admin"
     t.string   "email",                              default: "", null: false
     t.string   "encrypted_password",     limit: 128, default: "", null: false
@@ -38,8 +41,8 @@ ActiveRecord::Schema.define(version: 20130723111735) do
     t.datetime "updated_at"
   end
 
-  add_index "employees", ["email"], name: "index_employees_on_email", unique: true
-  add_index "employees", ["reset_password_token"], name: "index_employees_on_reset_password_token", unique: true
+  add_index "employees", ["email"], name: "index_employees_on_email", unique: true, using: :btree
+  add_index "employees", ["reset_password_token"], name: "index_employees_on_reset_password_token", unique: true, using: :btree
 
   create_table "merchant_cashouts", force: true do |t|
     t.integer  "merchant_id"

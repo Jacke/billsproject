@@ -15,15 +15,27 @@ def new
 	if @site.shiftstatus # Cancel shift
 		@shift = Shift.where(site_id: @site.id).last 
 		@shift.shift_row_assigns.build
-  else 								 # Accept shift
-  	@shift = Shift.new(employee_id: 1, site_id: @site.id)
-  	render "accept"
+  else 								 # Accept shift Admin action
+  	if Shift.where(site_id: @site.id).last.employee_id == nil 
+  	  render "accept"
+  	else
+  	  @shift = Shift.new(employee_id: 1, site_id: @site.id)
+  	  render "accept"
+  	end
   end
 end
 
+def balance_set
+  if Shift.where(site_id: @site.id).last.employee_id != nil 
+  	render "accept"
+  else
+  	redirect_to shifts_path(site: @site.id), notice: "Данное действие выполнить невозможно."
+end
+
+
 def create
  @shift = Shift.new(params[:shift]) 
- change_bool if @shift.save
+ change_bool if @shift.save && params[:shift][:employee_id].present?
  redirect_to shifts_path(site: @site.id)
 end
 

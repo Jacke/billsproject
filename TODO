@@ -1,0 +1,14 @@
+app/controllers/shifts_controller.rb:
+  * [ 1] Clean up actions
+  * [ 2] Check for @caattr safety
+
+app/models/shift.rb:
+  * [14] Move methods to concerns
+  * [15] Remade collection method (One line request, instance var assignment)
+  * [16] Callback cleaning up
+___
+PM(merchant)
+History(edit,revert)
+Callcack for deposit
+Default values in DB
+Fix integer in db

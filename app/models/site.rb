@@ -18,4 +18,5 @@ class Site < ActiveRecord::Base
 
   has_many :employees, through: :appointments 
   has_many :shifts
+  has_many :shift_rows
 end

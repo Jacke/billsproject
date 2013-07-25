@@ -135,6 +135,23 @@ color: #FFF;
     visibility: visible;
 }
 
+.avaliable_fields {
+    background-color: #F1C40F;
+    border-radius: 6px 6px 6px 6px;
+    color: white;
+    display: block;
+    float: right;
+    margin-top: 30px;
+    padding: 10px;
+    position: relative;
+    text-align: right;
+    .field_block {
+    font-family: "ProximaNovaLight";
+    font-size: 16px;
+    line-height: 18px;
+    }
+}
+
 /* Icons */
 
 
