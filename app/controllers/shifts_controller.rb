@@ -30,6 +30,7 @@ def balance_set
   	render "accept"
   else
   	redirect_to shifts_path(site: @site.id), notice: "Данное действие выполнить невозможно."
+  end
 end
 
 
