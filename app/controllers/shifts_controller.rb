@@ -26,7 +26,7 @@ def new
 end
 
 def balance_set
-  if Shift.where(site_id: @site.id).last.employee_id != nil 
+  if Shift.where(site_id: @site.id).last.employee_id
   	render "accept"
   else
   	redirect_to shifts_path(site: @site.id), notice: "Данное действие выполнить невозможно."
