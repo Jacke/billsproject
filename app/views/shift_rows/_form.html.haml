@@ -1,3 +1,4 @@
+- @sites = Site.all.collect {|r| [ "#{r.name}", r.id ] }
 = form_for @row do |f|
   - if @row.errors.any?
     #error_explanation
@@ -11,6 +12,8 @@
   .field
     = f.label :row_type
     = f.select :row_type, ShiftRow::TYPES
-
+  .field
+    = f.label :site_id
+    = f.select :site_id, @sites, { include_blank: true }
   .actions
     = f.submit 'Save'
