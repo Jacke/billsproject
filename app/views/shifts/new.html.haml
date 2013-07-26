@@ -1,5 +1,6 @@
 / / Shift cancel
-- @rows = ShiftRow.where(site_id: nil).collect {|r| [ "#{r.title} : #{r.rowtype}", r.id ] } # TODO: REFACTOR THAT SHIT
+- @rows = ShiftRow.where('row_type != 1 AND site_id IS NULL').collect {|r| [ "#{r.title} : #{r.rowtype}", r.id ] } # TODO: REFACTOR THAT SHIT
+- @site_rows = ShiftRow.where(site_id: @site.id)
 %div.avaliable_fields
   %h4 Доступные поля
   - @rows.each do |n,d|
@@ -24,12 +25,13 @@
     = f.text_field :comment
     = f.fields_for :shift_row_assigns, class: 'default_fields' do |default_row|
       .field
-        = "Обязательная ячейка"
-        %strong "Incasation"
-        = default_row.hidden_field :shift_row_id, value: 6
-      .field
-        = default_row.label "Значение"
-        = default_row.number_field :def
+        = "Поля для точки"
+        - @site_rows.each do |site_r|
+          %strong= "#{site_r.title} : #{(ShiftRow::TYPES.detect { |n, d| d == site_r.row_type })[0]}"
+          = default_row.hidden_field :shift_row_id, value: site_r.row_type
+          .field
+            = default_row.label "Значение"
+            = default_row.number_field :def
 
     = f.fields_for :shift_row_assigns do |shift_row|
       .field.row_select

@@ -16,23 +16,10 @@ def new
 		@shift = Shift.where(site_id: @site.id).last 
 		@shift.shift_row_assigns.build
   else 								 # Accept shift Admin action
-  	if Shift.where(site_id: @site.id).last.employee_id == nil 
-  	  render "accept"
-  	else
-  	  @shift = Shift.new(employee_id: 1, site_id: @site.id)
-  	  render "accept"
-  	end
+  	@shift = Shift.new(employee_id: 1, site_id: @site.id)
+  	render "accept_from_user"
   end
 end
-
-def balance_set
-  if Shift.where(site_id: @site.id).last.employee_id
-  	render "accept"
-  else
-  	redirect_to shifts_path(site: @site.id), notice: "Данное действие выполнить невозможно."
-  end
-end
-
 
 def create
  @shift = Shift.new(params[:shift]) 
@@ -49,9 +36,14 @@ def update
  redirect_to shifts_path(site: @site.id)
 end
 
-def set_current_site
-  #  set @current_account from session data here
-  Shift.current_site = @site.shiftstatus
+def balance
+  if balance_exist?
+    @shift = balance_obj
+    @shift.shift_row_assigns.build
+    render "balance"
+  else
+    redirect_to shifts_path(site: @site.id), notice: "Данное действие выполнить невозможно."
+  end
 end
 
 def revert_shift # REVERT FEATURE
@@ -60,6 +52,21 @@ def revert_shift # REVERT FEATURE
 end
 
 private
+
+def balance_exist?
+  request = Shift.where(site_id: @site.id)
+  request.present?
+end
+def balance_obj
+  request = Shift.where(site_id: @site.id)
+  request.last
+end
+
+
+def set_current_site
+  #  set @current_account from session data here
+  Shift.current_site = @site.shiftstatus
+end
 
 def set_site
 	 params[:site].present? ? site = params[:site] : site = params[:shift]["site_id"] # New shift or Shift in form

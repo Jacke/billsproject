@@ -4,6 +4,8 @@
     %li= "Статус #{aval?(@status)} к приему"
     %li
       = link_to "Смена", new_shift_path(site: @site.id)
+    %li
+      = link_to "Выставить баланс", balance_shifts_path(site: @site.id)
 - if @shifts
   %table.table
     %tr

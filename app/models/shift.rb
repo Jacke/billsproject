@@ -31,13 +31,10 @@
 # TODO: Callback cleaning up
 class Shift < ActiveRecord::Base
 	cattr_accessor :current_site
-	before_save :old_values_collect
-	#after_save :row_collect, :if => Shift.current_site #, 
-	# after_save :till_calc, :if => Shift.current_site
 	include TillCalculation
-	before_save :old_values_collect
-	after_save :row_collect
-	after_save :till_calc
+	before_save :old_values_collect, :if => :current_site
+	after_save :row_collect, :if => :current_site
+	after_save :till_calc, :if => :current_site
   attr_accessible :shiftstatus, 
 								  :site_id, 
 								  :employee_id, 
@@ -54,7 +51,9 @@ class Shift < ActiveRecord::Base
   def self.row_scope(name, body)
     send(:define_method, name, &body)
   end
-  
+  def current_site
+    Shift.current_site
+  end
 
 # Initialize instance scope for every row type, retrive values
 ShiftRow::TYPES.each do |rnm, rid|
@@ -95,7 +94,7 @@ end
    till = @init_till.to_i + @balance_diff.to_i + @encashmentOut.to_i - @expenses.to_i - @encashmentIn.to_i - @percent.to_i
    till
   end
-
+# TODO: Default values in DB for refactoring that shift upper
 
 
 end
