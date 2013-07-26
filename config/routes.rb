@@ -1,4 +1,4 @@
-# == Route Map (Updated 2013-07-20 11:53)
+# == Route Map (Updated 2013-07-25 14:29)
 #
 #                       Prefix Verb   URI Pattern                        Controller#Action
 #                   shift_rows GET    /shift_rows(.:format)              shift_rows#index
@@ -17,6 +17,7 @@
 #                              PATCH  /sites/:id(.:format)               sites#update
 #                              PUT    /sites/:id(.:format)               sites#update
 #                              DELETE /sites/:id(.:format)               sites#destroy
+#               balance_shifts GET    /shifts/balance(.:format)          shifts#balance
 #                       shifts GET    /shifts(.:format)                  shifts#index
 #                              POST   /shifts(.:format)                  shifts#create
 #                    new_shift GET    /shifts/new(.:format)              shifts#new
@@ -55,7 +56,11 @@ Billsproject::Application.routes.draw do
   resources :shift_rows
 
   resources :sites
-  resources :shifts
+  resources :shifts do
+    collection do
+      get 'balance'
+    end
+  end
   
   resources :employees
   devise_for :employees

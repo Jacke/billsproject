@@ -1,0 +1,12 @@
+= form_for @shift do |f|
+  - if @shift.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@row.errors.count, "error")} prohibited this row from being saved:"
+      %ul
+        - @shift.errors.full_messages.each do |msg|
+          %li= msg
+  .field  
+    = f.hidden_field :employee_id, value: 1 # TODO: REFACTOR THAT SHIT
+    = f.hidden_field :site_id, value: params[:site]
+  .actions.span4
+    = f.submit 'Принять смену', class: 'btn btn-large btn-block btn-success clearfix'
