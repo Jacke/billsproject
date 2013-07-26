@@ -62,7 +62,6 @@ def balance_obj
   request.last
 end
 
-
 def set_current_site
   #  set @current_account from session data here
   Shift.current_site = @site.shiftstatus
