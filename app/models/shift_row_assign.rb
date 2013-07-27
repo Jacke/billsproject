@@ -16,5 +16,4 @@ class ShiftRowAssign < ActiveRecord::Base
 	belongs_to :shift_row
 	belongs_to :shift
   
-  
 end

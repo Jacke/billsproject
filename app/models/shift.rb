@@ -55,6 +55,10 @@ class Shift < ActiveRecord::Base
     Shift.current_site
   end
 
+  def hoar_obj
+    self.hoar_rows.last
+  end
+
 # Initialize instance scope for every row type, retrive values
 ShiftRow::TYPES.each do |rnm, rid|
 row_scope "#{rnm}_vls".downcase.to_sym, ->(o = self) do 
@@ -64,6 +68,7 @@ end
 
 	# Associations
 	has_many :shift_row_assigns 
+  has_many :hoar_rows
 	has_many :shift_rows, through: :shift_row_assigns  
 	belongs_to :employee
 	belongs_to :site
@@ -73,8 +78,8 @@ end
  # instance methods
 
   def old_values_collect 
-       @init_balance = self.balance
-       @init_till = self.till # Define by admin at begining
+       @init_balance = hoar_obj.balance + self.oldbalance_vls.inject(:+).to_i
+       @init_till = hoar_obj.till # Define by admin at begining
   end
 
   def row_collect # that set after cancel shift
