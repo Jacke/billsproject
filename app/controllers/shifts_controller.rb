@@ -37,13 +37,10 @@ def update
 end
 
 def balance
-  if balance_exist?
-    @shift = balance_obj
+    @hoar = balance_obj
+    @shift = Shift.where(site_id: @site.id).last 
     @shift.shift_row_assigns.build
     render "balance"
-  else
-    redirect_to shifts_path(site: @site.id), notice: "Данное действие выполнить невозможно."
-  end
 end
 
 def revert_shift # REVERT FEATURE
@@ -53,13 +50,9 @@ end
 
 private
 
-def balance_exist?
-  request = Shift.where(site_id: @site.id)
-  request.present?
-end
 def balance_obj
-  request = Shift.where(site_id: @site.id)
-  request.last
+  request = Shift.where(site_id: @site.id).last
+  request.hoar_rows.new
 end
 
 def set_current_site

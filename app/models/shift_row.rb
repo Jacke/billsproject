@@ -18,7 +18,8 @@ TYPES = [
     [ "CashoutNow",         2 ],
     [ "EncashmentIn",       3 ],
     [ "EncashmentOut",      4 ],
-    [ "Expenses",           5 ]
+    [ "Expenses",           5 ],
+    [ "OldBalance",         6 ]
 ]
 	ShiftRow::TYPES.each do |row_name, id|
 	  scope "#{row_name}_type".to_sym, -> { where(row_type: id) }
@@ -28,7 +29,7 @@ TYPES = [
 
 	# Associations
 	has_many :shift_row_assigns 
-	has_many :shifts, through: :shift_row_assigns   
+	has_many :shifts, through: :shift_row_assigns
 	belongs_to :site
   accepts_nested_attributes_for :shifts, :shift_row_assigns
  def rowtype # Return type of row in human language

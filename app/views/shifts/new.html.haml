@@ -1,5 +1,5 @@
 / / Shift cancel
-- @rows = ShiftRow.where('row_type != 1 AND site_id IS NULL').collect {|r| [ "#{r.title} : #{r.rowtype}", r.id ] } # TODO: REFACTOR THAT SHIT
+- @rows = ShiftRow.where('row_type != 6 AND site_id IS NULL').collect {|r| [ "#{r.title} : #{r.rowtype}", r.id ] } # TODO: REFACTOR THAT SHIT
 - @site_rows = ShiftRow.where(site_id: @site.id)
 %div.avaliable_fields
   %h4 Доступные поля
@@ -20,6 +20,12 @@
   .field
     = f.label :percent
     = f.number_field :percent
+  .field
+    = f.label "Баланс"
+    = f.number_field :balance
+  .field
+    = f.label "Касса"
+    = f.number_field :till
   .field
     = f.label :comment
     = f.text_field :comment
