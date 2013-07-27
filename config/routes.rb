@@ -59,6 +59,8 @@ Billsproject::Application.routes.draw do
   resources :shifts do
     collection do
       get 'balance'
+      match 'balance', to: 'shifts#balance', via: :get
+      match 'balance', to: 'shifts#balance_update', via: [:post, :patch]
     end
   end
   

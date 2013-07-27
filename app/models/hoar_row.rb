@@ -13,6 +13,5 @@
 class HoarRow < ActiveRecord::Base
 
 attr_accessible :shift_id, :till, :balance
-
-belongs_to :shifts
+belongs_to :shift
 end

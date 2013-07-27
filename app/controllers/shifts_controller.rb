@@ -37,10 +37,30 @@ def update
 end
 
 def balance
-    @hoar = balance_obj
-    @shift = Shift.where(site_id: @site.id).last 
+    @hoar = balance_obj.hoar_row if balance_obj.hoar_row.present?
+    @hoar = balance_obj.build_hoar_row unless balance_obj.hoar_row.present?
+    @shift = balance_obj
     @shift.shift_row_assigns.build
     render "balance"
+end
+
+ #Parameters: "shift"=>{"hoar_row"=>{"balance"=>"9000", "till"=>"0"}, 
+ #"shift_row_assigns_attributes"=>{"0"=>{"shift_row_id"=>"8", "def"=>"", "_destroy"=>"false"}}}, 
+ #"commit"=>"Сохранить", "id"=>"19"}
+
+def balance_update
+  @shift = Shift.find(params[:shift][:id])
+  if @shift.hoar_row.present?
+    @hoar = @shift.hoar_row.update(params[:shift][:hoar_row])
+  else
+    @hoar = @shift.build_hoar_row(params[:shift][:hoar_row])
+    @hoar.save 
+  end
+
+  @shift.update("shift_row_assigns_attributes" => params[:shift][:shift_row_assigns_attributes])
+    
+  redirect_to shifts_path(site: @site.id), notice: 'good'
+
 end
 
 def revert_shift # REVERT FEATURE
@@ -52,7 +72,6 @@ private
 
 def balance_obj
   request = Shift.where(site_id: @site.id).last
-  request.hoar_rows.new
 end
 
 def set_current_site

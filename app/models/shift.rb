@@ -44,7 +44,8 @@ class Shift < ActiveRecord::Base
 								  :shift_rows_attributes, 
 								  :shift_row_assigns_attributes,
 								  :percent, 
-								  :shift_row_id
+								  :shift_row_id,
+                  :hoar_row
 
 
 # row instance scope
@@ -56,7 +57,7 @@ class Shift < ActiveRecord::Base
   end
 
   def hoar_obj
-    self.hoar_rows.last
+    self.hoar_row
   end
 
 # Initialize instance scope for every row type, retrive values
@@ -68,28 +69,28 @@ end
 
 	# Associations
 	has_many :shift_row_assigns 
-  has_many :hoar_rows
+  has_one :hoar_row
 	has_many :shift_rows, through: :shift_row_assigns  
 	belongs_to :employee
 	belongs_to :site
-	accepts_nested_attributes_for :shift_rows, :shift_row_assigns
+	accepts_nested_attributes_for :shift_rows, :shift_row_assigns, :hoar_row
 
 
  # instance methods
 
   def old_values_collect 
-       @init_balance = hoar_obj.balance + self.oldbalance_vls.inject(:+).to_i
+       @init_balance = hoar_obj.balance.to_i + self.oldbalance_vls.map(&:to_i).inject(:+).to_i
        @init_till = hoar_obj.till # Define by admin at begining
   end
 
   def row_collect # that set after cancel shift
-   balance = self.balance_vls.inject(:+).to_i 
-   @balance_diff = @init_balance - balance # Diff for init balance and new(for all rows)
+   balance = self.balance_vls.map(&:to_i).inject(:+).to_i 
+   @balance_diff = @init_balance.to_i - balance # Diff for init balance and new(for all rows)
    
-   @cashout = self.cashoutnow_vls.inject(:+)
-   @encashmentIn = self.encashmentin_vls.inject(:+)
-   @encashmentOut = self.encashmentout_vls.inject(:+)
-   @expenses = self.expenses_vls.inject(:+)
+   @cashout = self.cashoutnow_vls.map(&:to_i).inject(:+).to_i
+   @encashmentIn = self.encashmentin_vls.map(&:to_i).inject(:+).to_i
+   @encashmentOut = self.encashmentout_vls.map(&:to_i).inject(:+).to_i
+   @expenses = self.expenses_vls.map(&:to_i).inject(:+).to_i
    @percent = self.percent.to_i
  
   end

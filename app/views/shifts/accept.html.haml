@@ -1,0 +1,27 @@
+- @rows = ShiftRow.where(site_id: nil, row_type: 1).collect {|r| [ "#{r.title} : #{r.rowtype}", r.id ] } # TODO: REFACTOR THAT SHIT
+= form_for @shift do |f|
+  - if @shift.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@row.errors.count, "error")} prohibited this row from being saved:"
+      %ul
+        - @shift.errors.full_messages.each do |msg|
+          %li= msg
+  .field  
+    = f.hidden_field :site_id, value: params[:site]
+  .field
+    = f.label :balance
+    = f.number_field :balance
+  .field
+    = f.label :till
+    = f.number_field :till
+  = f.fields_for :shift_row_assigns do |shift_row|
+      .field.row_select
+        = shift_row.label :shift_row_id 
+        = shift_row.select :shift_row_id, options_for_select(@rows)
+      .field
+        = shift_row.label "Значение"
+        = shift_row.number_field :def
+      = shift_row.link_to_remove "Удалить поле"
+    = f.link_to_add "Добавить поле", :shift_row_assigns
+  .actions.span4
+    = f.submit 'Сохранить', class: 'btn btn-large btn-block btn-success clearfix'

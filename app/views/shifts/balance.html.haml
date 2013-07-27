@@ -1,19 +1,16 @@
 - @rows = ShiftRow.where(site_id: nil, row_type: 6).collect {|r| [ "#{r.title} : #{r.rowtype}", r.id ] } # TODO: REFACTOR THAT SHIT
 %h1 Ввод старых значений
-= fields_for @hoar do |h|
-  .field
-    = h.label "Баланс"
-    = h.number_field :balance
-  .field
-    = h.label "Касса"
-    = h.number_field :till
-= nested_form_for @shift do |f|
-  - if @shift.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@row.errors.count, "error")} prohibited this row from being saved:"
-      %ul
-        - @shift.errors.full_messages.each do |msg|
-          %li= msg
+= nested_form_for @shift, :url => url_for(:controller => 'shifts', :action => 'balance_update') do |f|
+  = f.hidden_field :site_id, value: params[:site]
+  = f.hidden_field :id, value: @shift.id
+  = f.fields_for @hoar, url: balance_shifts_path do |h|
+    .field
+      = h.label "Баланс"
+      = h.number_field :balance
+    .field
+      = h.label "Касса"
+      = h.number_field :till
+      =# h.submit 'Сохранить', class: 'btn btn-large btn-block btn-success clearfix'
   = f.fields_for :shift_row_assigns do |shift_row|
     .field.row_select
       = shift_row.label :shift_row_id 
@@ -24,4 +21,4 @@
     = shift_row.link_to_remove "Удалить поле"
   = f.link_to_add "Добавить поле", :shift_row_assigns
   .actions.span4
-    = f.submit 'Сохранить', class: 'btn btn-large btn-block btn-success clearfix'
+    = submit_tag 'Сохранить', class: 'btn btn-large btn-block btn-success clearfix'
