@@ -13,6 +13,11 @@ class EmployeesController < ApplicationController
     @employee = Employee.find(params[:id])
     render "_form"
   end
+  
+  def show
+    @employee = Employee.find(params[:id])
+    @shifts = @employee.shifts
+  end
 
   def create
     @employee = Employee.new(params[:employee])
@@ -22,9 +27,6 @@ class EmployeesController < ApplicationController
     else
       redirect_to employees_url, warning: "Something wrong" 
     end
-  end
-  def show
-      @employee = Employee.find(params[:id])
   end
 
   def update

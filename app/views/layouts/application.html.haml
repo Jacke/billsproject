@@ -14,36 +14,26 @@
           .container
             #nav-collapse-01.nav-collapse.collapse
               %ul.nav
-                - if controller?("sites")
-                  %li.active
-                    = link_to 'Точки', sites_path
-                - else 
-                  %li
-                    = link_to 'Точки', sites_path
-                - if controller?("employees")
-                  %li.active
-                    = link_to 'Сотрудники', employees_path
-                - else 
+                %li.active
+                  = link_to 'Точки', sites_path
+                - if current_employee.admin?
                   %li
                     = link_to 'Сотрудники', employees_path
-                %li
-                  %a{:href => "#fakelink"}
-                    История
-                %li
-                  = link_to 'Rows', shift_rows_path
+                  %li
+                    = link_to 'История', histories_path
+                  %li
+                    = link_to 'Rows', shift_rows_path
             / /.nav
       .user_nav
         - if employee_signed_in?
-          Logged in as
+          Вошел как
           = succeed "." do
-            %strong= current_employee.email
-          = link_to 'Edit profile', edit_employee_registration_path
-          = link_to "Logout", destroy_employee_session_path, method: :delete
+            %strong= link_to "#{current_employee.name}", employee_path(current_employee)
+          = link_to 'Изменить профиль', edit_employee_registration_path
+          = link_to "Выйти", destroy_employee_session_path, method: :delete
         - else
-        .span1
-          = link_to "Рега", new_employee_registration_path, class: 'btn btn-large btn-block btn-primary'
-        .span1
-          = link_to "Вход", new_employee_session_path, class: 'btn btn-large btn-block btn-primary'
+          .span1
+            = link_to "Вход", new_employee_session_path, class: 'btn btn-large btn-block btn-primary'
     %main.container
       - if flash[:notice]
         .alert.alert-success

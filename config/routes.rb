@@ -53,7 +53,13 @@
 #
 
 Billsproject::Application.routes.draw do
+
+  devise_for :employees
+  resources :employees
+  resources :histories
+
   resources :shift_rows
+
 
   resources :sites
   resources :shifts do
@@ -64,8 +70,7 @@ Billsproject::Application.routes.draw do
     end
   end
   
-  resources :employees
-  devise_for :employees
+
   # The priority is based upon order of creation: first created -> highest priority.
 
   root 'home#index'

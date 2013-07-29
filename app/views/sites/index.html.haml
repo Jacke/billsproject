@@ -1,15 +1,17 @@
 %section.header
   %h1 Точки
-  .control-content
-    = link_to '', new_site_path, class: 'fui-plus'
+  - if current_employee.admin?
+    .control-content
+      = link_to '', new_site_path, class: 'fui-plus'
 
 - @sites.each do |site|
   %div.site
     %h3.tile-title= link_to "#{site.name}", shifts_path(site: site.id)
     %p= site.direction
-
-    = link_to '', edit_site_path(site), class: 'fui-new'
-    = link_to '', site, class: 'fui-cross', :method => :delete, :data => { :confirm => 'Are you sure?' }
+    
+    - if current_employee.admin?
+      = link_to '', edit_site_path(site), class: 'fui-new'
+      = link_to '', site, class: 'fui-cross', :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 %br
 

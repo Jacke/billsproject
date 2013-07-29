@@ -35,7 +35,8 @@ class Employee < ActiveRecord::Base
   								:admin, 
   								:password, 
   								:password_confirmation, 
-  								:remember_me
+  								:remember_me,
+                  :site_ids
 
   # Associations
   has_many :appointments

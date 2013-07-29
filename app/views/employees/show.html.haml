@@ -1,0 +1,34 @@
+%h1 Карточка сотрудника
+%div.pull-right
+  = link_to 'Редактировать', edit_employee_path(@employee), class: 'fui-plus'
+
+%div.employee-profile
+  %h4= @employee.name
+  %h5= @employee.phone
+  %h5= @employee.email
+
+
+%table.table
+  %tr
+    %th id
+    %th date
+    %th 
+    %th 
+    %th
+    %th
+    %th
+
+  - @shifts.each do |shift|
+    %tr
+      %td= shift.id
+      %td= shift.site.name
+      %td= shift.employee.name
+      %td= shift.hoar_row.balance
+      %td= shift.hoar_row.till
+      %td= shift.balance
+      %td= shift.till
+      %td= shift.comment
+      %td= shift.created_at
+      / / %td= admin?(employee.admin)
+      / / %td= link_to 'Редактировать', edit_employee_path(employee)
+      / / %td= link_to 'Удалить', employee, :method => :delete, :data => { :confirm => 'Are you sure?' }
