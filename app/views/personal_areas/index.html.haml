@@ -1,0 +1,8 @@
+.breadcrumb-text
+  %h4.caption PM
+  %p
+    = link_to "Профиль", personal_areas_path, class: 'text-primary active'
+    = link_to 'Настройки', edit_employee_registration_path, class: 'text-info'
+    %a.text-danger Мерчант
+
+= render template: 'employees/show'

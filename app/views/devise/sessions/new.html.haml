@@ -1,0 +1,20 @@
+.devise_page.login-screen
+  .title_line
+    .title
+      %h2 Вход
+  .login_page.login-form
+    = form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+      .item
+        = f.label "Почта"
+        .field
+          = f.email_field :email
+      .item
+        = f.label "Пароль"
+        .field
+          = f.password_field :password
+      - if devise_mapping.rememberable?
+        %div
+          = f.check_box :remember_me
+          = f.label "Запомнить меня"
+      %div= f.submit "Вход", class: 'btn btn-large btn-block btn-inverse'
+    = render :partial => "devise/shared/links"

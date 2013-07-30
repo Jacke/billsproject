@@ -9,28 +9,31 @@
     / /= notice
     / / %p= alert
     %header.container
-      .navbar.navbar-inverse.span4
-        .navbar-inner
-          .container
-            #nav-collapse-01.nav-collapse.collapse
-              %ul.nav
-                %li.active
-                  = link_to 'Точки', sites_path
-                - if current_employee.admin?
-                  %li
-                    = link_to 'Сотрудники', employees_path
-                  %li
-                    = link_to 'История', histories_path
-                  %li
-                    = link_to 'Rows', shift_rows_path
-            / /.nav
-      .user_nav
+      - if current_employee.present?
+        .navbar.navbar-inverse.span4
+          .navbar-inner
+            .container
+              #nav-collapse-01.nav-collapse.collapse
+                %ul.nav
+                  %li.active
+                    = link_to 'Точки', sites_path
+                  - if current_employee.admin?
+                    %li
+                      = link_to 'Сотрудники', employees_path
+                    %li
+                      = link_to 'История', histories_path
+                    %li
+                      = link_to 'Rows', shift_rows_path
+              / /.nav
+        .user_nav
         - if employee_signed_in?
-          Вошел как
           = succeed "." do
             %strong= link_to "#{current_employee.name}", employee_path(current_employee)
-          = link_to 'Изменить профиль', edit_employee_registration_path
-          = link_to "Выйти", destroy_employee_session_path, method: :delete
+          %ul.user_sets.unstyled
+            %li
+              = link_to '', edit_employee_registration_path, class: 'fui-user'
+            %li
+              = link_to "Выйти", destroy_employee_session_path, method: :delete
         - else
           .span1
             = link_to "Вход", new_employee_session_path, class: 'btn btn-large btn-block btn-primary'

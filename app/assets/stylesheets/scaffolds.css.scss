@@ -18,7 +18,7 @@ pre {
   font-size: 11px;
 }
 
-a {
+/* a {
   color: #000;
   &:visited {
     color: #666;
@@ -28,7 +28,7 @@ a {
     background-color: #000;
   }
 }
-
+*/
 div {
   &.field, &.actions {
     margin-bottom: 10px;
@@ -150,6 +150,128 @@ color: #FFF;
     font-size: 16px;
     line-height: 18px;
     }
+}
+
+
+
+
+
+/* Flat ui pro */
+.text-primary {
+    color: #1ABC9C;
+}
+a.text-primary:hover, a.text-primary:focus {
+    color: #15967D;
+}
+.text-success {
+    color: #2ECC71;
+}
+a.text-success:hover, a.text-success:focus {
+    color: #25A35A;
+}
+.text-danger {
+    color: #E74C3C;
+}
+a.text-danger:hover, a.text-danger:focus {
+    color: #B93D30;
+}
+.text-warning {
+    color: #F1C40F;
+}
+a.text-warning:hover, a.text-warning:focus {
+    color: #C19D0C;
+}
+.text-info {
+    color: #3498DB;
+}
+a.text-info:hover, a.text-info:focus {
+    color: #2A7AAF;
+}
+.text-inverse {
+    color: #FFFFFF;
+}
+a.text-inverse:hover, a.text-inverse:focus {
+    color: #CCCCCC;
+}
+.breadcrumb {
+  background-color: #f3f4f5;
+  font-size: 14.994px;
+  font-weight: 700;
+  padding: 13px 20px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+.breadcrumb > li {
+  position: relative;
+  text-shadow: none;
+}
+.breadcrumb > li:after {
+  color: #bdc3c7;
+  content: "\e002";
+  display: inline-block;
+  font-family: 'Flat-UI-Icons';
+  font-size: 9.799999999999999px;
+  margin: -4px 9px 0 13px;
+  vertical-align: middle;
+  -webkit-font-smoothing: antialiased;
+}
+.breadcrumb .active {
+  color: #bdc3c7;
+  cursor: default;
+}
+.breadcrumb .active:after {
+  display: none;
+}
+.breadcrumb .active > a {
+  color: inherit;
+  cursor: inherit;
+}
+.breadcrumb-text {
+  color: #bdc3c7;
+  margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 1.231;
+}
+
+.breadcrumb-text a {
+      text-decoration: none;
+}
+.breadcrumb-text .caption {
+  font-weight: 700;
+  margin: 0 0 3px;
+  font-size: 18.004px;
+}
+.breadcrumb-text .caption:after {
+  content: "\e02c";
+  display: inline-block;
+  font-family: 'Flat-UI-Icons';
+  font-weight: normal;
+  font-variant: normal;
+  margin-left: 5px;
+  text-transform: none;
+  -webkit-font-smoothing: antialiased;
+}
+.breadcrumb-text p {
+  font-size: 23.996px;
+  
+  margin-top: 15px;
+  font-size: 30px;
+  font-family: ProximaNovaLight, helvetica, sans-serif;
+  /* 24px */
+
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+.breadcrumb-text p a.active {
+  text-decoration: underline;
+}
+.breadcrumb-text p a:after {
+  color: #bdc3c7;
+  content: "/";
+  font-weight: 300;
+  margin: 0 4px 0 9px;
+  text-decoration: none;
 }
 
 /* Icons */

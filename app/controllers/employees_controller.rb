@@ -44,4 +44,5 @@ class EmployeesController < ApplicationController
     @employee.destroy
     redirect_to employees_url, notice: "Сотрудник удален."
   end
+  
 end

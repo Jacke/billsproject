@@ -1,0 +1,36 @@
+/ /%h2
+/ /  Редактировать #{resource_name.to_s.humanize}
+.breadcrumb-text
+  %h4.caption PM
+  %p
+    = link_to "Профиль", personal_areas_path, class: 'text-primary'
+    = link_to 'Настройки', edit_employee_registration_path, class: 'text-info active'
+    %a.text-danger Мерчант
+.form
+  = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
+    = devise_error_messages!
+    .field
+      = f.label :name
+      = f.text_field :name
+    .field
+      = f.label :phone
+      = f.phone_field :phone
+    .field
+      = f.label "Емейл"
+      = f.email_field :email
+    .field
+      = f.label "Пароль"
+      = f.password_field :password
+      %small (leave blank if you don't want to change it)
+    .field
+      = f.label "Повторите пароль"
+      = f.password_field :password_confirmation
+    .field
+      = f.label :current_password
+      = f.password_field :current_password
+      %small (we need your current password to confirm your changes)
+    %div= f.submit "Обновить", class: 'btn btn-large btn-block btn-success'
+  %h3 Удаление аккаунта
+  %p
+    Не нужный аккаунт? #{link_to "Удалить его", registration_path(resource_name), :confirm => "Are you sure?", :method => :delete}.
+  = link_to "Назад", :back
