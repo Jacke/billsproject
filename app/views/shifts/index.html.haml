@@ -27,8 +27,9 @@
       %tr
         %td= @shifts.site.name
         %td= @shifts.employee.name
-        %td= @shifts.hoar_row.balance
-        %td= @shifts.hoar_row.till
+        - if @shifts.hoar_row.present?
+          %td= @shifts.hoar_row.balance
+          %td= @shifts.hoar_row.till
         %td= @shifts.balance
         %td= @shifts.till
         %td= @shifts.comment
