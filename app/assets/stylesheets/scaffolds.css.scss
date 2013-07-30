@@ -152,7 +152,13 @@ color: #FFF;
     }
 }
 
-
+.user_sets li {
+  float: left;
+  margin-right: 10px;
+  .fui-exit {
+    margin-top: 1px;
+  }
+}
 
 
 

@@ -27,11 +27,12 @@
               / /.nav
         .user_nav
         - if employee_signed_in?
-          = succeed "." do
-            %strong= link_to "#{current_employee.name}", personal_areas_path
           %ul.user_sets.unstyled
-            %li
-              = link_to "", destroy_employee_session_path, method: :delete, class: 'fui-exit'
+            = succeed "." do
+              %li
+                = link_to "#{current_employee.name}", personal_areas_path
+              %li
+                = link_to "", destroy_employee_session_path, method: :delete, class: 'fui-exit'
         - else
           .span1
             = link_to "Вход", new_employee_session_path, class: 'btn btn-large btn-block btn-primary'
