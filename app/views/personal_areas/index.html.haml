@@ -6,3 +6,6 @@
     %a.text-danger Мерчант
 
 = render template: 'employees/show'
+
+- if @shifts.present?
+  = render :partial => 'employees/shift'

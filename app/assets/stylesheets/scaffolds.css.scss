@@ -277,7 +277,7 @@ a.text-inverse:hover, a.text-inverse:focus {
 /* Icons */
 
 
-.fui-arrow-right, .fui-arrow-left, .fui-cmd, .fui-check-inverted, .fui-heart, .fui-location, .fui-plus, .fui-check, .fui-cross, .fui-list, .fui-new, .fui-video, .fui-photo, .fui-volume, .fui-time, .fui-eye, .fui-chat, .fui-search, .fui-user, .fui-mail, .fui-lock, .fui-gear, .fui-radio-unchecked, .fui-radio-checked, .fui-checkbox-unchecked, .fui-checkbox-checked, .fui-calendar-solid, .fui-pause, .fui-play, .fui-check-inverted-2 {
+.fui-exit, .fui-arrow-right, .fui-arrow-left, .fui-cmd, .fui-check-inverted, .fui-heart, .fui-location, .fui-plus, .fui-check, .fui-cross, .fui-list, .fui-new, .fui-video, .fui-photo, .fui-volume, .fui-time, .fui-eye, .fui-chat, .fui-search, .fui-user, .fui-mail, .fui-lock, .fui-gear, .fui-radio-unchecked, .fui-radio-checked, .fui-checkbox-unchecked, .fui-checkbox-checked, .fui-calendar-solid, .fui-pause, .fui-play, .fui-check-inverted-2 {
 display: inline-block;
 font-family: 'Flat-UI-Icons';
 speak: none;
@@ -377,4 +377,7 @@ text-decoration: none;
 }
 .fui-check-inverted-2:before {
   content: "\e000";
+}
+.fui-exit:before {
+  content: "\e026";
 }
