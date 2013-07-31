@@ -2,10 +2,10 @@
 %div
   %ul.unstyled
     %li= "Статус #{aval?(@status)} к приему"
-    - unless current_employee.admin?
+    - if current_employee.present?
       %li
         = link_to "Смена", new_shift_path(site: @site.id)
-    - if current_employee.admin?
+    - if current_employee.present?
       %li
         = link_to "Выставить баланс", balance_shifts_path(site: @site.id)
 - if @shifts
@@ -13,8 +13,6 @@
     %tr
       %th Точка
       %th Сотрудник
-      %th Баланс старт
-      %th Старая Касса
       %th Баланс
       %th Касса
       %th Комментарий
@@ -26,17 +24,25 @@
     - if @shifts
       %tr
         %td= @shifts.site.name
-        %td= @shifts.employee.name
+        %td= @shifts.employee.name if @shifts.employee.present?
         - if @shifts.hoar_row.present?
           %td= @shifts.hoar_row.balance
           %td= @shifts.hoar_row.till
+          %td
+          - @shifts.shift_row_assigns.each do |as|
+            %td
+          %td= @shifts.created_at
+          %td
+      %tr
+        %td= @shifts.site.name
+        %td= @shifts.employee.name if @shifts.employee.present?
         %td= @shifts.balance
         %td= @shifts.till
         %td= @shifts.comment
         - @shifts.shift_row_assigns.each do |as|
           %td= as.def
 
-        %td= @shifts.created_at
+        %td
         %td= @shifts.updated_at unless @shifts.created_at == @shifts.updated_at
         / / %td= link_to 'Destroy', @shifts, :method => :delete, :data => { :confirm => 'Are you sure?' }
 

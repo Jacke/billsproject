@@ -4,6 +4,7 @@ class ShiftsController < ApplicationController
 before_filter :set_site #, only: %w(index)
 
 before_filter :set_current_site
+before_filter :put_empty_shift, only: %w(balance)
 
 def index
   redirect_to sites_path unless @site
@@ -12,11 +13,13 @@ def index
 end
 
 def new
+  target = Shift.where(site_id: @site.id).last
 	if @site.shiftstatus # Cancel shift
-		@shift = Shift.where(site_id: @site.id).last 
+		@shift = target
 		@shift.shift_row_assigns.build
   else 								 # Accept shift Admin action
-  	@shift = Shift.new(employee_id: 1, site_id: @site.id)
+    @shift = target unless target.employee_id.present?
+  	@shift ||= Shift.new(employee_id: 1, site_id: @site.id)
   	render "accept_from_user"
   end
 end
@@ -44,10 +47,6 @@ def balance
     render "balance"
 end
 
- #Parameters: "shift"=>{"hoar_row"=>{"balance"=>"9000", "till"=>"0"}, 
- #"shift_row_assigns_attributes"=>{"0"=>{"shift_row_id"=>"8", "def"=>"", "_destroy"=>"false"}}}, 
- #"commit"=>"Сохранить", "id"=>"19"}
-
 def balance_update
   @shift = Shift.find(params[:shift][:id])
   if @shift.hoar_row.present?
@@ -69,6 +68,13 @@ def revert_shift # REVERT FEATURE
 end
 
 private
+
+def put_empty_shift
+  if @site.shiftstatus == false
+    z = @site.shifts.new 
+    z.save
+  end
+end
 
 def balance_obj
   request = Shift.where(site_id: @site.id).last
