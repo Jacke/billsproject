@@ -1,12 +1,19 @@
 / / Shift cancel
 - @rows = ShiftRow.where('row_type != 6 AND site_id IS NULL').collect {|r| [ "#{r.title} : #{r.rowtype}", r.id ] } # TODO: REFACTOR THAT SHIT
 - @site_rows = ShiftRow.where(site_id: @site.id)
+- @important = @shift.shift_row_assigns.find_all { |n| n.shift_row.row_type == 6 if n.shift_row.present? }
 %div.avaliable_fields
   %h4 Доступные поля
   - @rows.each do |n,d|
     %div.field_block
       %span= n
-
+  - if @important.present?
+    %h4 Поля обязательные к заполнению
+    %ul
+    - @important.each do |n|
+      %li
+        =n.shift_row.title
+        =n.shift_row.rowtype
 = nested_form_for @shift do |f|
   - if @shift.errors.any?
     #error_explanation
@@ -28,24 +35,31 @@
     = f.text_field :comment
     = f.fields_for :shift_row_assigns, class: 'default_fields' do |default_row|
       .field
-        = "Поля для точки"
         - @site_rows.each do |site_r|
-          %strong= "#{site_r.title} : #{(ShiftRow::TYPES.detect { |n, d| d == site_r.row_type })[0]}"
-          = default_row.hidden_field :shift_row_id, value: site_r.row_type
-          .field
-            = default_row.label "Значение"
-            = default_row.number_field :def
-
-    = f.fields_for :shift_row_assigns do |shift_row|
-      .field.row_select
-        = shift_row.label :shift_row_id 
-        = shift_row.select :shift_row_id, options_for_select(@rows)
-        =# shift_row.select :shift_row_id, options_for_select([["Баланс 2 : Balance", 1],["Зп сейчас : CashoutNow", 2], ["Инкассация взял : EncashmentIn", 3], ["Инкассация довез : EncashmentOut", 4], ["Хоз расходы : Expenses", 5]])
-        =# shift_row.select :shift_row_id, options_for_select([['Инкассация', 4], ['Хоз расходы', 5], ['Доп. расходы', 6]])
-        =# select_tag(:shift_row_id, options_for_select(@rows.collect {|r| [ "#{r.title} : #{r.rowtype}", r.id ] }))
-      .field
-        = shift_row.label "Значение"
-        = shift_row.number_field :def
+          - if default_row.object.shift_row.nil? || default_row.object.shift_row.row_type != 6
+            = "Поля для точки"
+            %strong= "#{site_r.title} : #{(ShiftRow::TYPES.detect { |n, d| d == site_r.row_type })[0]}"
+            = default_row.hidden_field :shift_row_id, value: site_r.row_type
+            .field
+              = default_row.label "Значение"
+              = default_row.number_field :def
+            - (1..@important.count).each do |imp_blc|
+              %strong= "Обязательные поля для баланса — #{imp_blc+1}"
+              = default_row.hidden_field :shift_row_id, value: 1
+              .field.control-group.error
+                = default_row.label "Значение"
+                = default_row.number_field :def
+    = f.fields_for :shift_row_assigns, :wrapper => false do |shift_row|
+      - if shift_row.object.shift_row.nil? || shift_row.object.shift_row.row_type != 6
+        .field.row_select
+          = shift_row.label :shift_row_id 
+          = shift_row.select :shift_row_id, options_for_select(@rows)
+          =# shift_row.select :shift_row_id, options_for_select([["Баланс 2 : Balance", 1],["Зп сейчас : CashoutNow", 2], ["Инкассация взял : EncashmentIn", 3], ["Инкассация довез : EncashmentOut", 4], ["Хоз расходы : Expenses", 5]])
+          =# shift_row.select :shift_row_id, options_for_select([['Инкассация', 4], ['Хоз расходы', 5], ['Доп. расходы', 6]])
+          =# select_tag(:shift_row_id, options_for_select(@rows.collect {|r| [ "#{r.title} : #{r.rowtype}", r.id ] }))
+        .field
+          = shift_row.label "Значение"
+          = shift_row.number_field :def
       = shift_row.link_to_remove "Удалить поле"
     = f.link_to_add "Добавить поле", :shift_row_assigns
   .actions.span4

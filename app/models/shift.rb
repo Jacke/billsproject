@@ -81,14 +81,14 @@ class Shift < ActiveRecord::Base
 	has_many :shift_rows, through: :shift_row_assigns  
 	belongs_to :employee
 	belongs_to :site
-	accepts_nested_attributes_for :shift_rows, :shift_row_assigns, :hoar_row
-
+	accepts_nested_attributes_for :shift_rows, :hoar_row
+  accepts_nested_attributes_for :shift_row_assigns, reject_if: proc { |attributes| attributes['def'].blank? }
 
  # instance methods
   def retrive_last_shift
     @last_shift = Shift.where(site_id: self.site_id).last
   end
-  def retrive_old_vls
+  def retrive_old_vls # from previous shift
     logger.info "ffff #{self.id}"
     if @last_shift.present?
       balance = @last_shift.balance.to_i + @last_shift.balance_vls.map(&:to_i).inject(:+).to_i 
@@ -97,14 +97,27 @@ class Shift < ActiveRecord::Base
     end
   end 
   def old_values_collect 
-       @init_balance = hoar_obj.balance.to_i + self.oldbalance_vls.map(&:to_i).inject(:+).to_i
+       @init_balance = hoar_obj.balance.to_i #+ self.oldbalance_vls.map(&:to_i).inject(:+).to_i
        @init_till = hoar_obj.till # Define by admin at begining
+  end
+  
+  def many_balance_diff
+    old = self.oldbalance_vls # [4242, 1122]
+    fresh = self.balance_vls # [6242, 4122]
+    if old.count == fresh.count 
+      l = []
+      (0..fresh.count-1).each {|n| l << (old[n] - fresh[n]) }
+      l.inject(:+).to_i
+    else 
+      0
+    end 
   end
 
   def row_collect # that set after cancel shift
-   balance = self.balance.to_i + self.balance_vls.map(&:to_i).inject(:+).to_i 
+   balance = self.balance.to_i #+ self.balance_vls.map(&:to_i).inject(:+).to_i 
    @balance_diff = @init_balance.to_i - balance # Diff for init balance and new(for all rows)
-   
+   @balance_diff = @balance_diff + many_balance_diff
+
    @cashout = self.cashoutnow_vls.map(&:to_i).inject(:+).to_i
    @encashmentIn = self.encashmentin_vls.map(&:to_i).inject(:+).to_i
    @encashmentOut = self.encashmentout_vls.map(&:to_i).inject(:+).to_i
