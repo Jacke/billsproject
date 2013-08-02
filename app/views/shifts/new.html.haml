@@ -1,5 +1,5 @@
 / / Shift cancel
-- @rows = ShiftRow.where('row_type != 6 AND site_id IS NULL').collect {|r| [ "#{r.title} : #{r.rowtype}", r.id ] } # TODO: REFACTOR THAT SHIT
+- @rows = ShiftRow.where('row_type != 6 AND row_type != 1 AND site_id IS NULL').collect {|r| [ "#{r.title} : #{r.rowtype}", r.id ] } # TODO: REFACTOR THAT SHIT
 - @site_rows = ShiftRow.where(site_id: @site.id)
 - @important = @shift.shift_row_assigns.find_all { |n| n.shift_row.row_type == 6 if n.shift_row.present? }
 %div.avaliable_fields
