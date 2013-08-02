@@ -35,12 +35,10 @@ class Shift < ActiveRecord::Base
 	cattr_accessor :current_site
 	include TillCalculation
   # callback for cancel shift
-	before_save :old_values_collect, :if => :current_site 
-	after_save :row_collect, :if => :current_site
-	after_save :till_calc, :if => :current_site
+	#     after_save :old_values_collect, :if => :current_site 
+  #     after_save :row_collect, :if => :current_site
+  #     after_save :calc_need?
   # callback for accept shift
-  
-  #before_save :retrive_old_vls, :unless => :current_site
   before_save :retrive_last_shift, :unless => :current_site
   after_save :retrive_old_vls, :unless => :current_site
 
@@ -66,18 +64,23 @@ class Shift < ActiveRecord::Base
   def current_site
     Shift.current_site
   end
-
+  def calc_need?
+      @calc ||= true
+      self.till_save if self.cancel_at.present? && @calc
+  end
   def hoar_obj
     self.hoar_row
   end
 
 # Initialize instance scope for every row type, retrive values
-  ShiftRow::TYPES.each do |rnm, rid|
-  row_scope "#{rnm}_vls".downcase.to_sym, ->(o = self) do 
-  	  ShiftRowAssign.joins(:shift_row).where(shift_rows: { row_type: rid }, shift_id: o.id).pluck(:def) 
-    end
-  end	  
 
+  row_scope :balance_vls, ->(o = self) {ShiftRowAssign.joins(:shift_row).where(shift_rows: { row_type: 1 }, shift_id: o.id).pluck(:def)  }
+  row_scope :cashoutnow_vls, ->(o = self) {ShiftRowAssign.joins(:shift_row).where(shift_rows: { row_type: 2 }, shift_id: o.id).pluck(:def)  }
+  row_scope :encashmentin_vls, ->(o = self) {ShiftRowAssign.joins(:shift_row).where(shift_rows: { row_type: 3 }, shift_id: o.id).pluck(:def)  }
+  row_scope :encashmentout_vls, ->(o = self) {ShiftRowAssign.joins(:shift_row).where(shift_rows: { row_type: 4 }, shift_id: o.id).pluck(:def)  }
+  row_scope :expenses_vls, ->(o = self) {ShiftRowAssign.joins(:shift_row).where(shift_rows: { row_type: 5 }, shift_id: o.id).pluck(:def)  }
+  row_scope :oldbalance_vls, ->(o = self) {ShiftRowAssign.joins(:shift_row).where(shift_rows: { row_type: 6 }, shift_id: o.id).pluck(:def)  }
+ 
 
 	# Associations
 	has_many :shift_row_assigns 
@@ -121,21 +124,24 @@ class Shift < ActiveRecord::Base
 
   def row_collect # that set after cancel shift
    balance = self.balance.to_i #+ self.balance_vls.map(&:to_i).inject(:+).to_i 
-   @balance_diff = @init_balance.to_i - balance # Diff for init balance and new(for all rows)
-   @balance_diff = @balance_diff + many_balance_diff
-
+   balance_diff = @init_balance.to_i - balance # Diff for init balance and new(for all rows)
+   @balance_diff = balance_diff + many_balance_diff
    @cashout = self.cashoutnow_vls.map(&:to_i).inject(:+).to_i
    @encashmentIn = self.encashmentin_vls.map(&:to_i).inject(:+).to_i
    @encashmentOut = self.encashmentout_vls.map(&:to_i).inject(:+).to_i
    @expenses = self.expenses_vls.map(&:to_i).inject(:+).to_i
    @percent = self.percent.to_i
- 
   end
   
   def till_calc
-   row_collect
    till = @init_till.to_i + @balance_diff.to_i + @encashmentOut.to_i - @expenses.to_i - @encashmentIn.to_i - @percent.to_i
    till
+  end
+  def till_save
+    result = self.till_calc
+    logger.info "BUUUUUUUUUUUUUUUUZ #{result}"
+   self.update_attribute :till, result
+   @calc = false
   end
 # TODO: Default values in DB for refactoring that shift upper
 
