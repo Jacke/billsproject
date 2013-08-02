@@ -43,12 +43,13 @@
             .field
               = default_row.label "Значение"
               = default_row.number_field :def
-            - (1..@important.count).each do |imp_blc|
-              %strong= "Обязательные поля для баланса — #{imp_blc+1}"
-              = default_row.hidden_field :shift_row_id, value: 1
-              .field.control-group.error
-                = default_row.label "Значение"
-                = default_row.number_field :def
+        - @important.count.times do |imp_blc|
+          - if default_row.object.shift_row.nil? || default_row.object.shift_row.row_type != 6
+            %strong= "Обязательные поля для баланса — #{imp_blc+1}"
+            = default_row.hidden_field :shift_row_id, value: 1
+            .field.control-group.error
+              = default_row.label "Значение"
+              = default_row.number_field :def
     = f.fields_for :shift_row_assigns, :wrapper => false do |shift_row|
       - if shift_row.object.shift_row.nil? || shift_row.object.shift_row.row_type != 6
         .field.row_select
