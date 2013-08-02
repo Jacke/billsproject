@@ -35,9 +35,7 @@ class Shift < ActiveRecord::Base
 	cattr_accessor :current_site
 	include TillCalculation
   # callback for cancel shift
-	#     after_save :old_values_collect, :if => :current_site 
-  #     after_save :row_collect, :if => :current_site
-  #     after_save :calc_need?
+
   # callback for accept shift
   before_save :retrive_last_shift, :unless => :current_site
   after_save :retrive_old_vls, :unless => :current_site
