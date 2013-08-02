@@ -11,12 +11,13 @@
 
   - @rows.each do |row|
     %tr
-      %td= row.title
-      %td= (ShiftRow::TYPES.detect { |n, d| d == row.row_type })[0] #// TODO: Refactor that shiiit
-      %td= row.site.name if row.site
-      %td= link_to 'Show', row
-      %td= link_to 'Edit', edit_shift_row_path(row)
-      %td= link_to 'Destroy', row, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      - if row.row_type != 6
+        %td= row.title
+        %td= (ShiftRow::TYPES.detect { |n, d| d == row.row_type })[0] #// TODO: Refactor that shiiit
+        %td= row.site.name if row.site
+        %td= link_to 'Show', row
+        %td= link_to 'Edit', edit_shift_row_path(row)
+        %td= link_to 'Destroy', row, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 %br
 
