@@ -11,6 +11,8 @@
 #  updated_at  :datetime
 #  comment     :text
 #  percent     :integer
+#  accept_at   :datetime
+#  cancel_at   :datetime
 #
 
 require 'spec_helper'

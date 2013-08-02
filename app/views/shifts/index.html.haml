@@ -29,12 +29,12 @@
           %td= @shifts.hoar_row.balance
           %td= @shifts.hoar_row.till
           - @shifts.shift_row_assigns.each do |as|
-            - if as.shift_row.row_type == 6
+            - if as.shift_row.present? && as.shift_row.row_type == 6
               %td= as.def
             - else
               %td
           %td
-          %td= @shifts.created_at
+          %td= @shifts.accept_at
           %td
       %tr
         %td= @shifts.site.name
@@ -42,12 +42,13 @@
         %td= @shifts.balance
         %td= @shifts.till
         - @shifts.shift_row_assigns.each do |as|
-          %td= as.def unless as.shift_row.row_type == 6
+          - if as.shift_row.present?
+            %td= as.def unless as.shift_row.row_type == 6
         %td= @shifts.comment
         
 
         %td
-        %td= @shifts.updated_at unless @shifts.created_at == @shifts.updated_at
+        %td= @shifts.cancel_at 
         / / %td= link_to 'Destroy', @shifts, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
   %br

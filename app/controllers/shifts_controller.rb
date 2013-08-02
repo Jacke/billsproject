@@ -93,8 +93,10 @@ end
 def change_bool
   if @site.shiftstatus
   	@site.update_attribute :shiftstatus, false
+    @shift.update_attribute :cancel_at, Time.now
   else
   	@site.update_attribute :shiftstatus, true
+    @shift.update_attribute :accept_at, Time.now
   end
 end
 

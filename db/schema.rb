@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130727002327) do
+ActiveRecord::Schema.define(version: 20130801220527) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "appointments", force: true do |t|
     t.integer  "employee_id"
@@ -88,6 +91,8 @@ ActiveRecord::Schema.define(version: 20130727002327) do
     t.datetime "updated_at"
     t.text     "comment"
     t.integer  "percent"
+    t.datetime "accept_at"
+    t.datetime "cancel_at"
   end
 
   create_table "sites", force: true do |t|

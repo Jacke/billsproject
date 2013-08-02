@@ -11,6 +11,8 @@
 #  updated_at  :datetime
 #  comment     :text
 #  percent     :integer
+#  accept_at   :datetime
+#  cancel_at   :datetime
 #
 
 # == Schema Information
@@ -52,7 +54,9 @@ class Shift < ActiveRecord::Base
 								  :shift_row_assigns_attributes,
 								  :percent, 
 								  :shift_row_id,
-                  :hoar_row
+                  :hoar_row,
+                  :cancel_at,
+                  :accept_at
 
 
 # row instance scope
