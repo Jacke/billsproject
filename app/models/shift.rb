@@ -94,6 +94,8 @@ class Shift < ActiveRecord::Base
   end
   def retrive_old_vls # from previous shift
     logger.info "ffff #{self.id}"
+    logger.info "ddd #{@last_shift.balance.to_i}"
+    logger.info "ttt #{@last_shift.balance_vls.map(&:to_i).inject(:+).to_i}"
     if @last_shift.present?
       balance = @last_shift.balance.to_i + @last_shift.balance_vls.map(&:to_i).inject(:+).to_i 
       till = @last_shift.till

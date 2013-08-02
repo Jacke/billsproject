@@ -16,7 +16,7 @@
       %th Баланс
       %th Касса
       - @shifts.shift_row_assigns.each do |as|
-        %th= as.shift_row.title if as.shift_row.present?
+        %th= as.shift_row.title if as.shift_row.present? && (as.shift_row.row_type == 6)
       %th Комментарий
       %th Принято
       %th= "Закрыто" unless @shifts.created_at == @shifts.updated_at
@@ -42,14 +42,12 @@
         %td= @shifts.balance
         %td= @shifts.till
         - @shifts.shift_row_assigns.each do |as|
-          - if as.shift_row_id == 1
-            %td= as.def 
-          /temp /- if as.shift_row.present?
-          / /  %td= as.def unless as.shift_row_id.row_type == 6
+          - if as.shift_row.present? && !(as.shift_row.row_type == 6)
+            %td= as.def
         %td= @shifts.comment
         
 
-        %td
+
         %td
         %td= @shifts.cancel_at 
         / / %td= link_to 'Destroy', @shifts, :method => :delete, :data => { :confirm => 'Are you sure?' }

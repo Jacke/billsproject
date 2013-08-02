@@ -46,7 +46,7 @@
         - @important.each do |imp_field|
           - if default_row.object.shift_row.nil? || default_row.object.shift_row.row_type != 6
             %strong= "Обязательные поля для баланса — #{imp_field.shift_row.title}"
-            = default_row.hidden_field :shift_row_id, value: 1
+            = default_row.hidden_field :shift_row_id, value: ShiftRow.find_by_title_and_row_type(imp_field.shift_row.title, 1).id
             .field.control-group.error
               = default_row.label "Значение"
               = default_row.number_field :def
