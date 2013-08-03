@@ -71,7 +71,7 @@ class Shift < ActiveRecord::Base
           k = adi_balance_diffy(@last_shift)
           k.each do |k,v|
             self.shift_row_assigns.new(shift_row_id: k, def: v).save
-          end
+          end if k.present?
        end
       end
     end
@@ -82,8 +82,12 @@ class Shift < ActiveRecord::Base
     old_ids = ShiftRow.joins(:shift_row_assigns).where(shift_row_assigns: { shift_id: object.id }, row_type: 6).pluck(:id)
     fresh = ShiftRowAssign.joins(:shift_row).where(shift_rows: { row_type: 6 }, shift_id: object.id).pluck(:def) 
     l = []
-    (0..fresh.count-1).each {|n| l << (old[n] - fresh[n]) }
-    Hash[old_ids.zip(l)] # => {1=>133, 2=>33}
+    logger.info "old #{old}"
+    logger.info "fresh #{fresh}"
+    if old.present? && fresh.present?
+      (0..fresh.count-1).each {|n| l << (old[n] - fresh[n]) }
+      Hash[old_ids.zip(l)] # => {1=>133, 2=>33}
+    end
   end
 
   def old_values_collect 
