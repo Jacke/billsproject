@@ -1,0 +1,37 @@
+%section.header
+  %h1 Сотрудники
+  .control-content
+    = link_to '', new_employee_path, class: 'fui-plus'
+%table.table.histories
+  %tr
+    %th Точка
+    %th Сотрудник
+    %th Баланс
+    %th Касса
+    %th 
+    %th
+    %th
+    %th
+
+  - @shifts.each do |shift|
+    %tr.first
+      %td= shift.site.name if shift.site.present?
+      %td= shift.employee.name
+      %td= shift.balance
+      %td= shift.till
+      %td= shift.accept_at
+      %td
+      %td= link_to 'Редактировать', edit_history_path(shift)
+      %td= link_to 'Удалить', shift, :method => :delete, :data => { :confirm => 'Are you sure?' }
+    %tr.last
+      %td
+      %td
+      %td= @hoar.select {|n| n.shift_id == shift.id }[0].balance if @hoar.select {|n| n.shift_id == shift.id }[0].present?
+      %td= @hoar.select {|n| n.shift_id == shift.id }[0].till  if @hoar.select {|n| n.shift_id == shift.id }[0].present?
+      %td
+      %td= shift.cancel_at
+      %td
+      %td 
+%br
+
+

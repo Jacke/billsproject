@@ -1,4 +1,4 @@
-module TillCalculation
+module ShiftCalculation
   extend ActiveSupport::Concern
 
   included do

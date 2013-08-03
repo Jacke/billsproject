@@ -23,7 +23,7 @@
           %li= msg
   .field  
     = f.hidden_field :site_id, value: params[:site] # TODO: REFACTOR THAT SHIT
-    = f.hidden_field :employee_id, value: 1 # TODO: REFACTOR THAT SHIT
+    = f.hidden_field :employee_id, value: current_employee.id # TODO: REFACTOR THAT SHIT
   .field
     = f.label :percent
     = f.number_field :percent

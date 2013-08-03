@@ -3,7 +3,7 @@
 # TODO: Callback cleaning up
 class Shift < ActiveRecord::Base
 	cattr_accessor :current_site
-	include TillCalculation
+	include ShiftCalculation
   # callback for cancel shift
 
   # callback for accept shift
@@ -104,7 +104,7 @@ class Shift < ActiveRecord::Base
     result = self.till_calc
     logger.info "BUUUUUUUUUUUUUUUUZ #{result}"
     self.update_attribute :till, result
-  end
+  end 
 # TODO: Default values in DB for refactoring that shift upper
 
 
