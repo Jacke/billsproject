@@ -1,33 +1,3 @@
-# == Schema Information
-#
-# Table name: shifts
-#
-#  id          :integer          not null, primary key
-#  site_id     :integer
-#  employee_id :integer
-#  balance     :integer
-#  till        :integer
-#  created_at  :datetime
-#  updated_at  :datetime
-#  comment     :text
-#  percent     :integer
-#  accept_at   :datetime
-#  cancel_at   :datetime
-#
-
-# == Schema Information
-#
-# Table name: shifts
-#
-#  id          :integer          not null, primary key
-#  site_id     :integer
-#  employee_id :integer
-#  balance     :integer
-#  till        :integer
-#  created_at  :datetime
-#  updated_at  :datetime
-#  comment     :text
-#
 # TODO: Move methods to concerns
 # TODO: Remade collection method (One line request, instance var assignment)
 # TODO: Callback cleaning up
@@ -59,6 +29,27 @@ class Shift < ActiveRecord::Base
   def self.row_scope(name, body)
     send(:define_method, name, &body)
   end
+
+# Initialize instance scope for every row type, retrive values
+
+    row_scope :balance_vls, ->(o = self) {ShiftRowAssign.joins(:shift_row).where(shift_rows: { row_type: 1 }, shift_id: o.id).pluck(:def)  }
+    row_scope :cashoutnow_vls, ->(o = self) {ShiftRowAssign.joins(:shift_row).where(shift_rows: { row_type: 2 }, shift_id: o.id).pluck(:def)  }
+    row_scope :encashmentin_vls, ->(o = self) {ShiftRowAssign.joins(:shift_row).where(shift_rows: { row_type: 3 }, shift_id: o.id).pluck(:def)  }
+    row_scope :encashmentout_vls, ->(o = self) {ShiftRowAssign.joins(:shift_row).where(shift_rows: { row_type: 4 }, shift_id: o.id).pluck(:def)  }
+    row_scope :expenses_vls, ->(o = self) {ShiftRowAssign.joins(:shift_row).where(shift_rows: { row_type: 5 }, shift_id: o.id).pluck(:def)  }
+    row_scope :oldbalance_vls, ->(o = self) {ShiftRowAssign.joins(:shift_row).where(shift_rows: { row_type: 6 }, shift_id: o.id).pluck(:def)  }
+ 
+
+# Associations
+	  has_many :shift_row_assigns 
+    has_one :hoar_row
+	  has_many :shift_rows, through: :shift_row_assigns  
+	  belongs_to :employee
+	  belongs_to :site
+	  accepts_nested_attributes_for :shift_rows, :hoar_row
+    accepts_nested_attributes_for :shift_row_assigns, reject_if: proc { |attributes| attributes['def'].blank? }
+
+# instance methods
   def current_site
     Shift.current_site
   end
@@ -70,26 +61,6 @@ class Shift < ActiveRecord::Base
     self.hoar_row
   end
 
-# Initialize instance scope for every row type, retrive values
-
-  row_scope :balance_vls, ->(o = self) {ShiftRowAssign.joins(:shift_row).where(shift_rows: { row_type: 1 }, shift_id: o.id).pluck(:def)  }
-  row_scope :cashoutnow_vls, ->(o = self) {ShiftRowAssign.joins(:shift_row).where(shift_rows: { row_type: 2 }, shift_id: o.id).pluck(:def)  }
-  row_scope :encashmentin_vls, ->(o = self) {ShiftRowAssign.joins(:shift_row).where(shift_rows: { row_type: 3 }, shift_id: o.id).pluck(:def)  }
-  row_scope :encashmentout_vls, ->(o = self) {ShiftRowAssign.joins(:shift_row).where(shift_rows: { row_type: 4 }, shift_id: o.id).pluck(:def)  }
-  row_scope :expenses_vls, ->(o = self) {ShiftRowAssign.joins(:shift_row).where(shift_rows: { row_type: 5 }, shift_id: o.id).pluck(:def)  }
-  row_scope :oldbalance_vls, ->(o = self) {ShiftRowAssign.joins(:shift_row).where(shift_rows: { row_type: 6 }, shift_id: o.id).pluck(:def)  }
- 
-
-	# Associations
-	has_many :shift_row_assigns 
-  has_one :hoar_row
-	has_many :shift_rows, through: :shift_row_assigns  
-	belongs_to :employee
-	belongs_to :site
-	accepts_nested_attributes_for :shift_rows, :hoar_row
-  accepts_nested_attributes_for :shift_row_assigns, reject_if: proc { |attributes| attributes['def'].blank? }
-
- # instance methods
   def retrive_last_shift
     @last_shift = Shift.where(site_id: self.site_id).last
   end

@@ -33,9 +33,11 @@ end
 def update
  @shift = Shift.find(params[:id])
  if @shift.update(params[:shift]) 
-    @shift.old_values_collect
-    @shift.row_collect
-    @shift.till_save
+    if @shift.site.shiftstatus # change need calc or not
+      @shift.old_values_collect
+      @shift.row_collect
+      @shift.till_save
+    end
  	  change_bool
  end
  redirect_to shifts_path(site: @site.id)
