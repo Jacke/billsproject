@@ -53,10 +53,7 @@ class Shift < ActiveRecord::Base
   def current_site
     Shift.current_site
   end
-  def calc_need?
-      @calc ||= true
-      self.till_save if self.cancel_at.present? && @calc
-  end
+
   def hoar_obj
     self.hoar_row
   end
@@ -65,9 +62,6 @@ class Shift < ActiveRecord::Base
     @last_shift = Shift.where(site_id: self.site_id).last
   end
   def retrive_old_vls # from previous shift
-    logger.info "ffff #{self.id}"
-    logger.info "ddd #{@last_shift.balance.to_i}"
-    logger.info "ttt #{@last_shift.balance_vls.map(&:to_i).inject(:+).to_i}"
     if @last_shift.present?
       balance = @last_shift.balance.to_i + @last_shift.balance_vls.map(&:to_i).inject(:+).to_i 
       till = @last_shift.till
@@ -109,8 +103,7 @@ class Shift < ActiveRecord::Base
   def till_save
     result = self.till_calc
     logger.info "BUUUUUUUUUUUUUUUUZ #{result}"
-   self.update_attribute :till, result
-   @calc = false
+    self.update_attribute :till, result
   end
 # TODO: Default values in DB for refactoring that shift upper
 

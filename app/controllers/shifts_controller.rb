@@ -33,7 +33,7 @@ end
 def update
  @shift = Shift.find(params[:id])
  if @shift.update(params[:shift]) 
-    if @shift.site.shiftstatus # change need calc or not
+    if @shift.site.shiftstatus # calculation need or not?
       @shift.old_values_collect
       @shift.row_collect
       @shift.till_save
