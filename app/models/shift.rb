@@ -63,7 +63,7 @@ class Shift < ActiveRecord::Base
   end
   def retrive_old_vls # from previous shift
     if @last_shift.present?
-      balance = @last_shift.balance.to_i + @last_shift.balance_vls.map(&:to_i).inject(:+).to_i 
+      balance = @last_shift.balance.to_i #+ @last_shift.balance_vls.map(&:to_i).inject(:+).to_i 
       till = @last_shift.till
       logger.info "TEST IMPORTANT #{self}"
       unless self.hoar_row.present?
