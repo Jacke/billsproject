@@ -65,9 +65,27 @@ class Shift < ActiveRecord::Base
     if @last_shift.present?
       balance = @last_shift.balance.to_i + @last_shift.balance_vls.map(&:to_i).inject(:+).to_i 
       till = @last_shift.till
-      self.build_hoar_row(till: till, balance: balance).save unless self.hoar_row.present?
+      logger.info "TEST IMPORTANT #{self}"
+      unless self.hoar_row.present?
+       if self.build_hoar_row(till: till, balance: balance).save 
+          k = adi_balance_diffy(@last_shift)
+          k.each do |k,v|
+            self.shift_row_assigns.new(shift_row_id: k, def: v).save
+          end
+       end
+      end
     end
   end 
+
+  def adi_balance_diffy(object)
+    old = ShiftRowAssign.joins(:shift_row).where(shift_rows: { row_type: 1 }, shift_id: object.id).pluck(:def) 
+    old_ids = ShiftRow.joins(:shift_row_assigns).where(shift_row_assigns: { shift_id: object.id }, row_type: 6).pluck(:id)
+    fresh = ShiftRowAssign.joins(:shift_row).where(shift_rows: { row_type: 6 }, shift_id: object.id).pluck(:def) 
+    l = []
+    (0..fresh.count-1).each {|n| l << (old[n] - fresh[n]) }
+    Hash[old_ids.zip(l)] # => {1=>133, 2=>33}
+  end
+
   def old_values_collect 
        @init_balance = hoar_obj.balance.to_i #+ self.oldbalance_vls.map(&:to_i).inject(:+).to_i
        @init_till = hoar_obj.till # Define by admin at begining

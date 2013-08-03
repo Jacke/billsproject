@@ -1,7 +1,7 @@
-%section.header
-  %h1 Сотрудники
+%section.header.history-main
+  %h1 История
   .control-content
-    = link_to '', new_employee_path, class: 'fui-plus'
+    %span.history Наведите на дополнительный блок, чтобы получить информаци о его типе.
 %table.table.histories
   %tr
     %th Точка
@@ -16,7 +16,7 @@
   - @shifts.each do |shift|
     %tr.first
       %td= shift.site.name if shift.site.present?
-      %td= shift.employee.name
+      %td= shift.employee.name if shift.employee.present?
       %td= shift.balance
       %td= shift.till
       %td= shift.accept_at
