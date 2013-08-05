@@ -3,14 +3,15 @@
   .control-content
     %span.history Наведите на дополнительный блок, чтобы получить информаци о его типе.
   %ul.pager.history-option
-    %li.previous
+    %li
       %a{:href => "#fakelink"}
-        %i.fui-arrow-left
         %span Месяц
-    %li.next
+    %li
       %a{:href => "#fakelink"}
         %span Неделя
-        %i.fui-arrow-right
+    %li
+      %a{:href => "#fakelink"}
+        %span Дата
   / /pager
 %table.table.histories
   %tr
@@ -20,6 +21,10 @@
     %th Касса
     %th Принято
     %th Сдано
+    - @shifts.each do |shift|
+      - shift.shift_row_assigns.each do |as|
+        - if as.shift_row.present? && (as.shift_row.row_type != 1)
+          %th= as.shift_row.title 
     %th
     %th
 
@@ -39,6 +44,10 @@
       %td= @hoar.select {|n| n.shift_id == shift.id }[0].till  if @hoar.select {|n| n.shift_id == shift.id }[0].present?
       %td
       %td= shift.cancel_at
+      - @shifts.each do |shift|
+        - shift.shift_row_assigns.each do |as|
+          - if as.shift_row.present? && !(as.shift_row.row_type == 6)
+            %td= as.def
       %td
       %td 
     %tr.last
