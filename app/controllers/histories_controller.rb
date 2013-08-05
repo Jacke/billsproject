@@ -5,10 +5,13 @@ def index
   @hoar = HoarRow.all
 end
 
-def create
- @shift = Shift.new(params[:shift]) 
- change_bool if @shift.save && params[:shift][:employee_id].present?
- redirect_to shifts_path(site: @site.id)
+def edit
+ @shift = Shift.find(params[:id]) 
+ #  change_bool if @shift.save && params[:shift][:employee_id].present?
+ #  redirect_to shifts_path(site: @site.id)
+ @hoar = @shift.hoar_row
+ @shift_row_assigns = @shift.shift_row_assigns
+ @rows = ShiftRow.where('site_id IS NULL').collect {|r| [ "#{r.title} : #{r.rowtype}", r.id ] }
 end
 
 def update

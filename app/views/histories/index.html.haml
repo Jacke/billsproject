@@ -2,6 +2,16 @@
   %h1 История
   .control-content
     %span.history Наведите на дополнительный блок, чтобы получить информаци о его типе.
+  %ul.pager.history-option
+    %li.previous
+      %a{:href => "#fakelink"}
+        %i.fui-arrow-left
+        %span Месяц
+    %li.next
+      %a{:href => "#fakelink"}
+        %span Неделя
+        %i.fui-arrow-right
+  / /pager
 %table.table.histories
   %tr
     %th Точка
@@ -21,8 +31,9 @@
       %td= shift.till
       %td= shift.accept_at
       %td
-      %td= link_to 'Редактировать', edit_history_path(shift)
-      %td= link_to 'Удалить', shift, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %td
+        = link_to '', edit_history_path(shift), class: 'fui-new'
+        = link_to '', shift, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'fui-cross'
     %tr.last
       %td
       %td

@@ -85,7 +85,7 @@ class Shift < ActiveRecord::Base
     logger.info "old #{old}"
     logger.info "fresh #{fresh}"
     if old.present? && fresh.present?
-      (0..fresh.count-1).each {|n| l << old[n] } # old[n] } 
+      (0..fresh.count-1).each {|n| l << old[n] } # old[n] } # TODO: change fresh to old so it be syntacly -]f, g| 
       Hash[old_ids.zip(l)] # => {1=>133, 2=>33}
     end
   end
