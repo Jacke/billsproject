@@ -18,8 +18,8 @@
     %th Сотрудник
     %th Баланс
     %th Касса
-    %th 
-    %th
+    %th Принято
+    %th Сдано
     %th
     %th
 
@@ -32,9 +32,7 @@
       %td= shift.accept_at
       %td
       %td
-        = link_to '', edit_history_path(shift), class: 'fui-new'
-        = link_to '', shift, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'fui-cross'
-    %tr.last
+    %tr
       %td
       %td
       %td= @hoar.select {|n| n.shift_id == shift.id }[0].balance if @hoar.select {|n| n.shift_id == shift.id }[0].present?
@@ -43,6 +41,22 @@
       %td= shift.cancel_at
       %td
       %td 
+    %tr.last
+      %td 
+        %b Итого
+      %td
+      %td
+        - if shift.balance.present?
+          = shift.balance + @hoar.select {|n| n.shift_id == shift.id }[0].balance if @hoar.select {|n| n.shift_id == shift.id }[0].present?
+      %td
+        - if shift.till.present?
+          = shift.till + @hoar.select {|n| n.shift_id == shift.id }[0].till  if @hoar.select {|n| n.shift_id == shift.id }[0].present?
+      %td
+      %td
+      %td
+      %td 
+        = link_to '', edit_history_path(shift), class: 'fui-new'
+        = link_to '', shift, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'fui-cross'
 %br
 
 

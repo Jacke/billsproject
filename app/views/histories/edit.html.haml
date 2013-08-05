@@ -46,9 +46,10 @@
       .field.row_select
         = shift_row.label :shift_row_id 
         = shift_row.select :shift_row_id, options_for_select(@rows)
+        //= shift_row.number_field :shift_row_id
       .field
         = shift_row.label "Значение"
         = shift_row.number_field :def
-      .actions.span4
-    = f.submit 'Save', class: 'btn btn-large btn-block btn-success clearfix'
+    .actions.span4
+      = f.submit 'Save', class: 'btn btn-large btn-block btn-success clearfix'
 
