@@ -123,7 +123,8 @@ class Shift < ActiveRecord::Base
   end
   
   def till_calc
-   till = @init_till.to_i + @balance_diff.to_i + @encashmentOut.to_i - @expenses.to_i - @encashmentIn.to_i - @percent.to_i
+   self.employee.put_casout(@cashout)
+   till = @init_till.to_i + @balance_diff.to_i + @encashmentOut.to_i - @cashout - @expenses.to_i - @encashmentIn.to_i - @percent.to_i
    till
   end
 

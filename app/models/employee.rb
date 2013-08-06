@@ -46,7 +46,12 @@ class Employee < ActiveRecord::Base
 
   accepts_nested_attributes_for :sites
   accepts_nested_attributes_for :appointments
+  def put_cashout(cashouts)
+    cashouts.each do |cashout|
+      self.merchant.merchant_cashout.new(cashout_sum: cashout).save
+    end
 
+  end
   private 
     def new_merchant
       self.build_merchant.save

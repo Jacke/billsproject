@@ -7,7 +7,4 @@ app/models/shift.rb:
   * [15] Remade collection method (One line request, instance var assignment)
   * [16] Callback cleaning up
 ___
-History(edit,revert)
-Callcack for deposit
 Default values in DB
-Fix integer in db
