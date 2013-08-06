@@ -38,7 +38,10 @@ class Shift < ActiveRecord::Base
     row_scope :encashmentout_vls, ->(o = self) {ShiftRowAssign.joins(:shift_row).where(shift_rows: { row_type: 4 }, shift_id: o.id).pluck(:def)  }
     row_scope :expenses_vls, ->(o = self) {ShiftRowAssign.joins(:shift_row).where(shift_rows: { row_type: 5 }, shift_id: o.id).pluck(:def)  }
     row_scope :oldbalance_vls, ->(o = self) {ShiftRowAssign.joins(:shift_row).where(shift_rows: { row_type: 6 }, shift_id: o.id).pluck(:def)  }
- 
+    
+    scope :last_week, -> { where("shifts.created_at >= :date", :date => 1.week.ago) } 
+    scope :last_month, -> { where("shifts.created_at >= :date", :date => 1.month.ago) }
+    scope :by_site, ->(site_id) { where(site_id: site_id) }
 
 # Associations
 	  has_many :shift_row_assigns 
@@ -106,8 +109,8 @@ class Shift < ActiveRecord::Base
       0
     end 
   end
-  def many_balance_diff_show
-    old = self.oldbalance_vls # [4242, 1122]
+  def many_balance_diff_show(shift_id)
+    old = ShiftRowAssign.joins(:shift_row).where(shift_rows: { row_type: 1 }, shift_id: object.id).pluck(:def) 
     fresh = self.balance_vls # [6242, 4122]
     if old.count == fresh.count 
       l = []

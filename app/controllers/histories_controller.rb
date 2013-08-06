@@ -1,8 +1,14 @@
 class HistoriesController < ApplicationController
 
 def index
-  @shifts = Shift.all
-  @hoar = HoarRow.all
+  if params[:sort].present?
+    @shifts = Shift.last_week if params[:sort] == 'by_week'
+    @shifts = Shift.all.last_month if params[:sort] == 'by_month'
+    @hoar = HoarRow.all
+  else
+    @shifts = Shift.all
+    @hoar = HoarRow.all
+  end
 end
 
 def edit

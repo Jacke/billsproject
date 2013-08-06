@@ -4,14 +4,11 @@
     %span.history Наведите на дополнительный блок, чтобы получить информаци о его типе.
   %ul.pager.history-option
     %li
-      %a{:href => "#fakelink"}
-        %span Месяц
+      = link_to 'Месяц', histories_path(sort: 'by_month')
     %li
-      %a{:href => "#fakelink"}
-        %span Неделя
-    %li
-      %a{:href => "#fakelink"}
-        %span Дата
+      = link_to 'Неделя', histories_path(sort: 'by_week')
+    / /%li
+    / /  = link_to 'Дата', histories_path(sort: 'by_month')
   / /pager
 %table.table.histories
   %tr
