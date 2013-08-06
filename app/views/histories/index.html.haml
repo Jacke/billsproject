@@ -19,36 +19,40 @@
     %th Сотрудник
     %th Баланс
     %th Касса
-    %th Принято
-    %th Сдано
-    - @shifts.each do |shift|
-      - shift.shift_row_assigns.each do |as|
-        - if as.shift_row.present? && (as.shift_row.row_type != 1)
-          %th= as.shift_row.title 
+    // Count of headers
+    - count = @shifts.joins("LEFT OUTER JOIN shift_row_assigns on shifts.id=shift_row_assigns.shift_id").group("shifts.id").count("shift_row_assigns.id").max[1]
+    - count.times do |th|
+      %th
+    %th Сдано / Принято
     %th
-    %th
-
+    %th 
   - @shifts.each do |shift|
     %tr.first
       %td= shift.site.name if shift.site.present?
       %td= shift.employee.name if shift.employee.present?
-      %td= shift.balance
+      %td= shift.balance 
       %td= shift.till
+      - shift.shift_row_assigns.each do |as|
+        - if as.shift_row.present? && !(as.shift_row.row_type == 6)
+          %td= as.def
+        - else
+          %td
+      %td
+      %td
       %td= shift.accept_at
-      %td
-      %td
     %tr
       %td
       %td
       %td= @hoar.select {|n| n.shift_id == shift.id }[0].balance if @hoar.select {|n| n.shift_id == shift.id }[0].present?
       %td= @hoar.select {|n| n.shift_id == shift.id }[0].till  if @hoar.select {|n| n.shift_id == shift.id }[0].present?
       %td
-      %td= shift.cancel_at
-      - @shifts.each do |shift|
-        - shift.shift_row_assigns.each do |as|
-          - if as.shift_row.present? && !(as.shift_row.row_type == 6)
-            %td= as.def
+      - shift.shift_row_assigns.each do |as|
+        - if as.shift_row.present? && !(as.shift_row.row_type == 6)
+          %td= as.def
+        - else
+          %td
       %td
+      %td= shift.cancel_at
       %td 
     %tr.last
       %td 
@@ -60,6 +64,10 @@
       %td
         - if shift.till.present?
           = shift.till + @hoar.select {|n| n.shift_id == shift.id }[0].till  if @hoar.select {|n| n.shift_id == shift.id }[0].present?
+      %td
+      %td
+      %td
+      %td
       %td
       %td
       %td
