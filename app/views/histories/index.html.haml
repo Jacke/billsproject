@@ -47,7 +47,6 @@
       %td= @hoar.select {|n| n.shift_id == shift.id }[0].balance if @hoar.select {|n| n.shift_id == shift.id }[0].present?
       %td= @hoar.select {|n| n.shift_id == shift.id }[0].till  if @hoar.select {|n| n.shift_id == shift.id }[0].present?
       %td= shift.cancel_at
-      %td
       - shift.shift_row_assigns.each do |as|
         - if as.shift_row.present? && !(as.shift_row.row_type == 6)
           %td#popoverData
