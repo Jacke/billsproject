@@ -64,6 +64,7 @@ class Shift < ActiveRecord::Base
   def retrive_last_shift
     @last_shift = Shift.where(site_id: self.site_id).last
   end
+  
   def retrive_old_vls # from previous shift
     if @last_shift.present?
       balance = @last_shift.balance.to_i #+ @last_shift.balance_vls.map(&:to_i).inject(:+).to_i 
@@ -109,14 +110,7 @@ class Shift < ActiveRecord::Base
       0
     end 
   end
-  def many_balance_diff_show(shift_id)
-    old = ShiftRowAssign.joins(:shift_row).where(shift_rows: { row_type: 1 }, shift_id: object.id).pluck(:def) 
-    fresh = self.balance_vls # [6242, 4122]
-    if old.count == fresh.count 
-      l = []
-      (0..fresh.count-1).each {|n| l << (old[n] - fresh[n]) }
-    end
-  end
+
   def row_collect # that set after cancel shift
    balance = self.balance.to_i #+ self.balance_vls.map(&:to_i).inject(:+).to_i 
    balance_diff = @init_balance.to_i - balance # Diff for init balance and new(for all rows)
@@ -132,6 +126,7 @@ class Shift < ActiveRecord::Base
    till = @init_till.to_i + @balance_diff.to_i + @encashmentOut.to_i - @expenses.to_i - @encashmentIn.to_i - @percent.to_i
    till
   end
+
   def till_save
     result = self.till_calc
     logger.info "BUUUUUUUUUUUUUUUUZ #{result}"

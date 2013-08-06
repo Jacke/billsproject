@@ -1,6 +1,7 @@
 class HistoriesController < ApplicationController
 
 def index
+    @sites = Site.all
   if params[:sort].present?
     @shifts = Shift.last_week if params[:sort] == 'by_week'
     @shifts = Shift.all.last_month if params[:sort] == 'by_month'
@@ -8,6 +9,9 @@ def index
   else
     @shifts = Shift.all
     @hoar = HoarRow.all
+  end
+  if params[:sort] == 'by_site'
+    @shifts = @shifts.by_site(params[:site])
   end
 end
 
@@ -30,8 +34,22 @@ def update
     end
     change_bool
  end
- redirect_to shifts_path(site: @site.id)
+ redirect_to histories_path
 end
 
+def update_hoar
+ @hoar = HoarRow.find(params[:id])
+ if @hoar.update(params[:hoar_row])
+    # calculation updating
+ end
+ redirect_to histories_path
+end
+
+private
+
+def recalculate
+ # your code is here
+end
 
 end
+
