@@ -106,7 +106,14 @@ class Shift < ActiveRecord::Base
       0
     end 
   end
-
+  def many_balance_diff_show
+    old = self.oldbalance_vls # [4242, 1122]
+    fresh = self.balance_vls # [6242, 4122]
+    if old.count == fresh.count 
+      l = []
+      (0..fresh.count-1).each {|n| l << (old[n] - fresh[n]) }
+    end
+  end
   def row_collect # that set after cancel shift
    balance = self.balance.to_i #+ self.balance_vls.map(&:to_i).inject(:+).to_i 
    balance_diff = @init_balance.to_i - balance # Diff for init balance and new(for all rows)

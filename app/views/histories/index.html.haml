@@ -33,10 +33,12 @@
       %td= shift.balance 
       %td= shift.till
       %td= shift.accept_at
+      - diffs = []
       - shift.shift_row_assigns.each do |as|
-        - if as.shift_row.present? && !(as.shift_row.row_type == 6)
+        - if as.shift_row.present? && as.shift_row.row_type == 6
           %td#popoverData
             %a{"data-content" => "#{as.shift_row.title}", "data-original-title" => "Колонка", "data-placement" => "bottom", "data-trigger" => "hover", :href => "#", :rel => "popover"}= as.def
+            - diffs << as.def 
         - else
           %td
       %td
@@ -51,8 +53,9 @@
         - if as.shift_row.present? && !(as.shift_row.row_type == 6)
           %td#popoverData
             %a{"data-content" => "#{as.shift_row.title}", "data-original-title" => "Колонка", "data-placement" => "bottom", "data-trigger" => "hover", :href => "#", :rel => "popover"}= as.def
-        - else
-          %td
+            - diffs << as.def if as.shift_row.row_type == 6 || as.shift_row.row_type == 1
+        / /- else
+        / /  %td
       %td
       %td 
     %tr.last
@@ -60,12 +63,14 @@
         %b Итого
       %td
       %td
-        - if shift.balance.present?
-          = shift.balance + @hoar.select {|n| n.shift_id == shift.id }[0].balance if @hoar.select {|n| n.shift_id == shift.id }[0].present?
+        - if shift.balance.present? && @hoar.select {|n| n.shift_id == shift.id }[0].present? 
+          = @hoar.select {|n| n.shift_id == shift.id }[0].balance - shift.balance 
       %td
-        - if shift.till.present?
-          = shift.till + @hoar.select {|n| n.shift_id == shift.id }[0].till  if @hoar.select {|n| n.shift_id == shift.id }[0].present?
+  
       %td
+      - shift.shift_row_assigns.each do |as|
+        - if as.shift_row.present? && as.shift_row.row_type == 6 #|| as.shift_row.row_type == 1
+          %td= diffs.inject(:-).to_i
       %td
       %td
       %td

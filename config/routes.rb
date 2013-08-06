@@ -3,7 +3,7 @@ Billsproject::Application.routes.draw do
   devise_for :employees
   resources :employees 
   resources :personal_areas, only: [:index], :path => :pm
-  resources :histories, only: [:index, :update, :edit]
+  resources :histories, only: [:index, :update, :edit] 
 
   resources :shift_rows
 
