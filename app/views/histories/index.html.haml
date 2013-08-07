@@ -10,10 +10,12 @@
     / /%li
     / /  = link_to 'Дата', histories_path(sort: 'by_month')
   / /pager
-  %ul Точки
-    - @sites.each do |site|
-      %li
-        = link_to site.name, histories_path(sort: 'by_site', site: site.id)
+  %ul
+    %span Точки
+  - @sites.each do |site|
+    %li
+      = link_to site.name, histories_path(sort: 'by_site', site: site.id)
+      = link_to 'All', histories_path
 %table.table.histories
   %tr
     %th Точка

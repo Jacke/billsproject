@@ -11,6 +11,7 @@ def index
     @hoar = HoarRow.all
   end
   if params[:sort] == 'by_site'
+    @shifts ||= Shift.all
     @shifts = @shifts.by_site(params[:site])
   end
 end
