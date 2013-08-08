@@ -66,6 +66,17 @@ def balance_update
 
 end
 
+def deposit
+  @employee = current_employee
+  @merchant = @employee.merchant
+  render 'employees/deposit'
+end
+
+def deposit_update
+  @employee = Employee.find(params[:employee][:id])
+  @employee.merchant.update(params[:employee][:merchant])
+end
+
 def revert_shift # REVERT FEATURE
 	@shift = Shift.find(params[:id])
   redirect_to edit_shift_path(@shift)

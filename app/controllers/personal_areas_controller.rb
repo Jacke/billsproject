@@ -6,8 +6,4 @@ def index
     @merchant = @employee.merchant
 end
 
-def cashout
-
-end
-
 end

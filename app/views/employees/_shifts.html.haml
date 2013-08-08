@@ -1,12 +1,14 @@
 %table.table
   %tr
     %th id
-    %th date
-    %th 
-    %th 
-    %th
-    %th
-    %th
+    %th Точка
+    %th Сотрудник
+    %th Старый баланс
+    %th Старая касса
+    %th Баланс
+    %th Касса
+    %th Коментарий
+    %th Создано
   - @shifts.each do |shift|
     %tr
       %td= shift.id

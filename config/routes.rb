@@ -14,6 +14,8 @@ Billsproject::Application.routes.draw do
       get 'balance'
       match 'balance', to: 'shifts#balance', via: :get
       match 'balance', to: 'shifts#balance_update', via: [:post, :patch]
+      match 'deposit', to: 'shifts#deposit', via: :get
+      #match 'deposit', to: 'shifts#deposit_update', via: [:post, :patch]
     end
   end
   

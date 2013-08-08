@@ -2,3 +2,23 @@
 = @merchant.id
 
 %strong= "Депосит #{@merchant.deposit}"
+
+%hr
+
+%table.table.cashouts
+  %tr
+    %th id
+    %th merchant id
+    %th Сумма
+    %th Создано
+    %th Обновленно
+    %th
+    %th
+  - @merchant.merchant_cashouts.each do |cashout|
+    %tr
+      %td= cashout.id
+      %td= cashout.merchant_id
+      %td= cashout.cashout_sum
+      %td= cashout.created_at
+      %td= cashout.updated_at
+

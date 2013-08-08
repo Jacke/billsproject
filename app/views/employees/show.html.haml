@@ -10,3 +10,6 @@
 
 - if @shifts.present?
   = render :partial => 'employees/shifts'
+
+- if current_employee.admin?
+  = render template: 'employees/deposit'

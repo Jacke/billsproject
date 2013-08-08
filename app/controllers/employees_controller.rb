@@ -17,6 +17,7 @@ class EmployeesController < ApplicationController
   def show
     @employee = Employee.find(params[:id])
     @shifts = @employee.shifts
+    @merchant = @employee.merchant
   end
 
   def create
@@ -32,8 +33,10 @@ class EmployeesController < ApplicationController
   def update
     @employee = Employee.find(params[:id])
     @employee.update_attributes(params[:employee])
+    @employee.merchant.update(params[:merchant]) if params[:merchant].present?
     if @employee.save
-      redirect_to employees_url, notice: "Сотрудник обновлен."
+      redirect_to employees_url, notice: "Сотрудник обновлен." if current_employee.admin?
+      redirect_to sites_url unless current_employee.admin?
     else
       redirect_to employees_url, warning: "Something wrong" 
     end

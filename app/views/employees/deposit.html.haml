@@ -1,0 +1,15 @@
+.form.clearfix
+  = form_for @employee do |f|
+    / /- if @employee.errors.any?
+    / /  #error_explanation
+    / /    %h2= "#{pluralize(@employee.errors.count, "error")} prohibited this employee from being saved:"
+    / /    %ul
+    / /      - @employee.errors.full_messages.each do |msg|
+    / /        %li= msg
+    = @merchant.inspect
+    = fields_for :merchant do |n|
+      .field
+        = n.label :deposit
+        = n.number_field :deposit
+    .actions.span4
+      = f.submit 'Save', class: 'btn btn-small btn-block btn-success clearfix'

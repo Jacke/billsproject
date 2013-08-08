@@ -36,7 +36,8 @@ class Employee < ActiveRecord::Base
   								:password, 
   								:password_confirmation, 
   								:remember_me,
-                  :site_ids
+                  :site_ids,
+                  :merchant_attributes
 
   # Associations
   has_many :appointments
@@ -46,6 +47,7 @@ class Employee < ActiveRecord::Base
 
   accepts_nested_attributes_for :sites
   accepts_nested_attributes_for :appointments
+  accepts_nested_attributes_for :merchant
   def put_cashouts(cashouts)
     cashouts.each do |cashout|
       self.merchant.merchant_cashouts.new(cashout_sum: cashout).save
@@ -54,6 +56,6 @@ class Employee < ActiveRecord::Base
   end
   private 
     def new_merchant
-      self.build_merchant.save
+      self.build_merchant.save unless self.merchant.present?
     end
 end
