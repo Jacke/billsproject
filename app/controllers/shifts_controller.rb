@@ -1,9 +1,9 @@
 # TODO: Clean up actions
 # TODO: Check for @caattr safety
 class ShiftsController < ApplicationController
-before_filter :set_site #, only: %w(index)
+before_filter :set_site, except: %w(destroy)
 
-before_filter :set_current_site
+before_filter :set_current_site, except: %w(destroy)
 before_filter :put_empty_shift, only: %w(balance)
 
 def index
@@ -42,7 +42,7 @@ def update
  end
  redirect_to shifts_path(site: @site.id)
 end
-
+def destroy; Shift.find(params[:id]).destroy; redirect_to sites_path; end;
 def balance
     @hoar = balance_obj.hoar_row if balance_obj.hoar_row.present?
     @hoar = balance_obj.build_hoar_row unless balance_obj.hoar_row.present?

@@ -41,7 +41,10 @@ end
 def update_hoar
  @hoar = HoarRow.find(params[:id])
  if @hoar.update(params[:hoar_row])
-    # calculation updating
+    @shift = @hoar.shift
+    @shift.old_values_collect
+    @shift.row_collect
+    @shift.till_save
  end
  redirect_to histories_path
 end
