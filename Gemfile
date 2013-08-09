@@ -11,6 +11,10 @@ gem "nested_form", :git => 'https://github.com/ryanb/nested_form.git'
 gem 'pg'
 #gem 'sqlite3'
 #gem 'sourcify'
+gem 'unicorn'
+gem 'capistrano'
+
+
 gem 'devise'
 gem 'protected_attributes'
 

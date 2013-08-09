@@ -8,7 +8,7 @@
     - if current_employee.present?
       %li
         = link_to "Выставить баланс", balance_shifts_path(site: @site.id)
-    - if @status && current_employee.merchant.updated_at < @shifts.accept_at
+    - if @shifts && @status && (current_employee.merchant.updated_at < @shifts.accept_at)
       %li
         = link_to "Выставить депозит", deposit_shifts_path(site: @site.id)
 - if @shifts
