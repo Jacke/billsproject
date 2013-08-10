@@ -24,4 +24,13 @@ describe Shift do
     expect(Shift.first.till).to be_true 
     expect(Shift.first.balance).to be_true 
   end
+
+  it "shift accepting" do
+   @shiftstatus = false
+   shift = Shift.new(site_id: 1)
+   if shift.save
+     @shiftstatus = true
+   end
+   @shiftstatus == be_true
+  end
 end
