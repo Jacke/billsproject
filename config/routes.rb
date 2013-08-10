@@ -24,7 +24,7 @@ Billsproject::Application.routes.draw do
   authenticated :employee do
     root to: 'sites#index', as: :authenticated_root
   end
-  root :to => redirect('/employees/sign_in')
+  root :to => redirect('/my/employees/sign_in')
   
  
 end
