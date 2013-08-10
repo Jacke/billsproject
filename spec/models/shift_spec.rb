@@ -18,5 +18,10 @@
 require 'spec_helper'
 
 describe Shift do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "shift has till and balance" do
+    shift = Shift.create!(site_id: 1, balance: 2000, till: 1000)
+
+    expect(Shift.first.till).to be_true 
+    expect(Shift.first.balance).to be_true 
+  end
 end
