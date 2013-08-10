@@ -1,6 +1,6 @@
 Billsproject::Application.routes.draw do
 
-  devise_for :employees
+  devise_for :employees, :path_prefix => 'my'
   resources :employees 
   resources :personal_areas, only: [:index], :path => :pm
   resources :histories, only: [:index, :update, :edit] 

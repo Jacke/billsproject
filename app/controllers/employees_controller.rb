@@ -31,6 +31,10 @@ class EmployeesController < ApplicationController
   end
 
   def update
+    if params[:employee][:password].blank?
+      params[:employee].delete(:password)
+      params[:employee].delete(:password_confirmation)
+    end
     @employee = Employee.find(params[:id])
     @employee.update_attributes(params[:employee])
     @employee.merchant.update(params[:merchant]) if params[:merchant].present?
