@@ -115,7 +115,7 @@ class Shift < ActiveRecord::Base
    balance = self.balance.to_i #+ self.balance_vls.map(&:to_i).inject(:+).to_i 
    balance_diff = @init_balance.to_i - balance # Diff for init balance and new(for all rows)
    @balance_diff = balance_diff + many_balance_diff
-   @cashout = self.cashoutnow_vls.map(&:to_i).inject(:+).to_i
+   @cashouts = self.cashoutnow_vls.map(&:to_i).inject(:+).to_i
    @encashmentIn = self.encashmentin_vls.map(&:to_i).inject(:+).to_i
    @encashmentOut = self.encashmentout_vls.map(&:to_i).inject(:+).to_i
    @expenses = self.expenses_vls.map(&:to_i).inject(:+).to_i
@@ -123,8 +123,8 @@ class Shift < ActiveRecord::Base
   end
   
   def till_calc
-   self.employee.put_casout(@cashout)
-   till = @init_till.to_i + @balance_diff.to_i + @encashmentOut.to_i - @cashout - @expenses.to_i - @encashmentIn.to_i - @percent.to_i
+   self.employee.put_cashouts(@cashout)
+   till = @init_till.to_i + @balance_diff.to_i + @encashmentOut.to_i - @cashouts - @expenses.to_i - @encashmentIn.to_i - @percent.to_i
    till
   end
 
