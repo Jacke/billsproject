@@ -4,7 +4,7 @@ Billsproject::Application.routes.draw do
   resources :employees 
   resources :personal_areas, only: [:index], :path => :pm
   resources :histories, only: [:index, :update, :edit] 
-
+    match 'update_hoar' => 'histories#update_hoar', via: :get
   resources :shift_rows
 
 
@@ -15,7 +15,7 @@ Billsproject::Application.routes.draw do
       match 'balance', to: 'shifts#balance', via: :get
       match 'balance', to: 'shifts#balance_update', via: [:post, :patch]
       match 'deposit', to: 'shifts#deposit', via: :get
-      #match 'deposit', to: 'shifts#deposit_update', via: [:post, :patch]
+      match 'deposit', to: 'shifts#deposit_update', via: [:post, :patch]
     end
   end
   
