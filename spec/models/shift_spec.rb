@@ -18,6 +18,10 @@
 require 'spec_helper'
 
 describe Shift do
+   let(:site) do
+    stub_model Site, id: 1, shiftstatus: false
+   end
+
   it "shift has till and balance" do
     shift = Shift.create!(site_id: 1, balance: 2000, till: 1000)
 
@@ -26,11 +30,11 @@ describe Shift do
   end
 
   it "shift accepting" do
-   @shiftstatus = false
+   
    shift = Shift.new(site_id: 1)
    if shift.save
-     @shiftstatus = true
+     site.shiftstatus = true
    end
-   @shiftstatus == be_true
+   site.shiftstatus == be_true
   end
 end
