@@ -29,8 +29,7 @@ class Employee < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :phone, 
-  								:name, 
-  								:sites_attributes, 
+  		  :first_name, :last_name, :sites_attributes, 
   								:email, 
   								:admin, 
   								:password, 

@@ -4,7 +4,7 @@
     = link_to 'Редактировать', edit_employee_path(@employee), class: 'fui-plus'
 
 %div.employee-profile
-  %h4= @employee.name
+  %h4= @employee.first_name
   %h5= @employee.phone
   %h5= @employee.email
 

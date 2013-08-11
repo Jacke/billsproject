@@ -32,7 +32,7 @@
           %ul.user_sets.unstyled
             = succeed "." do
               %li
-                = link_to "#{current_employee.name}", personal_areas_path
+                = link_to "#{current_employee.first_name}", personal_areas_path
               %li
                 = link_to "", destroy_employee_session_path, method: :delete, class: 'fui-exit'
         - else

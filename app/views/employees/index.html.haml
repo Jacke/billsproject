@@ -14,7 +14,7 @@
 
   - @employees.each do |employee|
     %tr
-      %td= link_to "#{employee.name}", employee_path(employee)
+      %td= link_to "#{employee.first_name}", employee_path(employee)
       %td= employee.email
       %td= employee.phone
       %td= admin?(employee.admin)

@@ -32,7 +32,7 @@
   - @shifts.each do |shift|
     %tr.first
       %td= shift.site.name if shift.site.present?
-      %td= shift.employee.name if shift.employee.present?
+      %td= shift.employee.first_name if shift.employee.present?
       %td= shift.balance 
       %td= shift.till
       %td= shift.accept_at

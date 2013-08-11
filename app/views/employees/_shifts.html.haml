@@ -13,7 +13,7 @@
     %tr
       %td= shift.id
       %td= shift.site.name if shift.site.present?
-      %td= shift.employee.name
+      %td= shift.employee.first_name
       %td= shift.hoar_row.balance if shift.hoar_row.present?
       %td= shift.hoar_row.till if shift.hoar_row.present?
       %td= shift.balance

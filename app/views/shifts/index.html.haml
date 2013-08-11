@@ -27,7 +27,7 @@
     - if @shifts
       %tr
         %td= @shifts.site.name
-        %td= @shifts.employee.name if @shifts.employee.present?
+        %td= @shifts.employee.first_name if @shifts.employee.present?
         - if @shifts.hoar_row.present?
           %td= @shifts.hoar_row.balance
           %td= @shifts.hoar_row.till
@@ -41,7 +41,7 @@
           %td
       %tr
         %td= @shifts.site.name
-        %td= @shifts.employee.name if @shifts.employee.present?
+        %td= @shifts.employee.first_name if @shifts.employee.present?
         %td= @shifts.balance
         %td= @shifts.till
         - @shifts.shift_row_assigns.each do |as|
