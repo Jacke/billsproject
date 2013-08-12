@@ -1,23 +1,21 @@
-# encoding: utf-8
 %section.header.history-main
   %h1 История
   .control-content
-    %span.history Наведите на дополнительный блок, чтобы получить информаци о его типе.
+    %span.history Наведите на дополнительный блок, чтобы полу�его типе.
   %ul.pager.history-option
     %li
       = link_to 'Месяц', histories_path(sort: 'by_month')
     %li
       = link_to 'Неделя', histories_path(sort: 'by_week')
     / /%li
-    / /  = link_to 'Дата', histories_path(sort: 'by_month')
+    / / = link_to 'Дата', histories_path(sort: 'by_month')
   / /pager
   %ul
     %span Точки
   - @sites.each do |site|
     %li
       = link_to site.name, histories_path(sort: 'by_site', site: site.id)
-      = link_to 'All', histories_path
-%table.table.histories
+      = link_to 'All', histories_path %table.table.histories
   %tr
     %th Точка
     %th Сотрудник
@@ -29,20 +27,20 @@
     - count.times do |th|
       %th
     %th
-    %th 
+    %th
   - @shifts.each do |shift|
     %tr.first
       %td= shift.site.name if shift.site.present?
       %td= shift.employee.first_name if shift.employee.present?
-      %td= shift.balance 
+      %td= shift.balance
       %td= shift.till
       %td= shift.accept_at
       - diffs = []
       - shift.shift_row_assigns.each do |as|
         - if as.shift_row.present? && as.shift_row.row_type == 6
           %td#popoverData
-            %a{"data-content" => "#{as.shift_row.title}", "data-original-title" => "Колонка", "data-placement" => "bottom", "data-trigger" => "hover", :href => "#", :rel => "popover"}= as.def
-            - diffs << as.def 
+            %a{"data-content" => "#{as.shift_row.title}", "data-original-title" => "Колонка", "data-placement" => "bo "data-trigger" => "hover", :href => "#", :rel => "popover"}= as.def
+            - diffs << as.def
         - else
           %td
       %td
@@ -51,38 +49,41 @@
       %td
       %td
       %td= @hoar.select {|n| n.shift_id == shift.id }[0].balance if @hoar.select {|n| n.shift_id == shift.id }[0].present?
-      %td= @hoar.select {|n| n.shift_id == shift.id }[0].till  if @hoar.select {|n| n.shift_id == shift.id }[0].present?
+      %td= @hoar.select {|n| n.shift_id == shift.id }[0].till if @hoar.select {|n| n.shift_id == shift.id }[0].present?
       %td= shift.cancel_at
-      - exp_rows = ShiftRow.where('row_type != 6 AND row_type != 1 AND site_id IS NULL').collect {|r| [r.id,  "#{r.title}", r.row_type ] }
+      - exp_rows = ShiftRow.where('row_type != 6 AND row_type != 1 AND site_id IS NULL').collect {|r| [r.id, "#{r.title}", r.row_type ] }
       - row_vls = ShiftRowAssign.where(shift_id: shift.id).to_a.each_with_object({}){ |c,h| h[c.shift_row_id] = c.def }
       
       - # collect shift_row ids by specific row_type
       - (2..5).each do |row_type|
         - if row_vls.present?
-          - z = exp_rows.select { |num| num[2] == row_type } # {59=>"Инкассаци 60=>"Процен�}
-          - Hash[z.map {|n,z| [n, z]}].each do |row_id, row_name| 
+          - z = exp_rows.select { |num| num[2] == row_type } # {59=>"ss"¸ 60=>"dd}
+          - Hash[z.map {|n,z| [n, z]}].each do |row_id, row_name|
             %td#popoverData
-              %a{"data-content" => "#{row_name}", "data-original-title" => "▒^▒олонка", "data-placement" => "bottom", "data-trigger" => "hover", :href => "#", :rel => "popover"}= row_vls[row_id]
+              %a{"data-content" => "#{row_name}", "data-original-title" => "кОЛОНКА", "data-placement" => "bottom", "data-trigger" 
+=> "hover", :href => "#", :rel => "popover"}= row_vls[row_id]
         - else
           %td#popoverData
-            %a{"data-content" => "#{row_type}", "data-original-title" => "▒^▒^▒^▒^▒^▒олонка", "data-placement" => "bottom", "data-trigger" => "hover", :href => "#", :rel => "popover"} 0
+            %a{"data-content" => "#{row_type}", "data-original-title" => "тИП", "data-placement" => "bottom", "data-trigger" => "hover", 
+:href => "#", :rel => "popover"} 0
       
       - shift.shift_row_assigns.each do |as|
         - if as.shift_row.present? && as.shift_row.row_type == 1
           %td#popoverData
-            %a{"data-content" => "#{as.shift_row.title}", "data-original-title" => "Колонка", "data-placement" => "bottom", "data-trigger" => "hover", :href => "#", :rel => "popover"}= as.def
+            %a{"data-content" => "#{as.shift_row.title}", "data-original-title" => "Колонка", "data-placement" => "bottom", 
+"data-trigger" => "hover", :href => "#", :rel => "popover"}= as.def
             - diffs << as.def if as.shift_row.row_type == 6 || as.shift_row.row_type == 1
         / /- else
-        / /  %td
+        / / %td
       %td
-      %td 
+      %td
     %tr.last
-      %td 
+      %td
         %b Итого
       %td
       %td
-        - if shift.balance.present? && @hoar.select {|n| n.shift_id == shift.id }[0].present? 
-          = @hoar.select {|n| n.shift_id == shift.id }[0].balance - shift.balance 
+        - if shift.balance.present? && @hoar.select {|n| n.shift_id == shift.id }[0].present?
+          = @hoar.select {|n| n.shift_id == shift.id }[0].balance - shift.balance
       %td
   
       %td
@@ -95,25 +96,9 @@
       %td
       %td
       %td
-      %td 
+      %td
         = link_to '', edit_history_path(shift), class: 'fui-new'
-        = link_to '', shift, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'fui-cross'
-%br
-%h3 Total
-%table.table.histories
-  %tr
-    %th Точка
-    %th Сотрудник
-    %th Баланс
-    %th Касса
-    %th Сдано / Принято
-    // Count of headers
-    - count.times do |th|
-      %th
-    %th
-    %th %table.table.histories
-  %tr
-    %td Total
+        = link_to '', shift, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'fui-cross' %br %h3 Total
 :javascript
   $('#popoverData a').popover();
   $('#popoverOption').popover({ trigger: "hover" });
