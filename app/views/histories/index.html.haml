@@ -1,4 +1,3 @@
-# encoding: utf-8
 %section.header.history-main
   %h1 История
   .control-content
@@ -59,13 +58,13 @@
       - # collect shift_row ids by specific row_type
       - (2..5).each do |row_type|
         - if row_vls.present?
-          - z = exp_rows.select { |num| num[2] == row_type } # {59=>"Инкассаци 60=>"Процен�}
+          - z = exp_rows.select { |num| num[2] == row_type } # {59=>"ss"¸ 60=>"dd}
           - Hash[z.map {|n,z| [n, z]}].each do |row_id, row_name| 
             %td#popoverData
-              %a{"data-content" => "#{row_name}", "data-original-title" => "▒^▒олонка", "data-placement" => "bottom", "data-trigger" => "hover", :href => "#", :rel => "popover"}= row_vls[row_id]
+              %a{"data-content" => "#{row_name}", "data-original-title" => "кОЛОНКА", "data-placement" => "bottom", "data-trigger" => "hover", :href => "#", :rel => "popover"}= row_vls[row_id]
         - else
           %td#popoverData
-            %a{"data-content" => "#{row_type}", "data-original-title" => "▒^▒^▒^▒^▒^▒олонка", "data-placement" => "bottom", "data-trigger" => "hover", :href => "#", :rel => "popover"} 0
+            %a{"data-content" => "#{row_type}", "data-original-title" => "тИП", "data-placement" => "bottom", "data-trigger" => "hover", :href => "#", :rel => "popover"} 0
       
       - shift.shift_row_assigns.each do |as|
         - if as.shift_row.present? && as.shift_row.row_type == 1
@@ -100,20 +99,7 @@
         = link_to '', shift, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'fui-cross'
 %br
 %h3 Total
-%table.table.histories
-  %tr
-    %th Точка
-    %th Сотрудник
-    %th Баланс
-    %th Касса
-    %th Сдано / Принято
-    // Count of headers
-    - count.times do |th|
-      %th
-    %th
-    %th %table.table.histories
-  %tr
-    %td Total
+
 :javascript
   $('#popoverData a').popover();
   $('#popoverOption').popover({ trigger: "hover" });
