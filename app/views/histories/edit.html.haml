@@ -74,7 +74,7 @@
           - @shift_row_assigns.each do |assign|
             %ul
               %li
-                = assign.shift_row.title
+                = assign.shift_row.title if assign.shift_row.present?
                 %span= "Значение #{assign.def}"
                 // = link_to '', assign, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'fui-cross'
 
