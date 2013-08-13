@@ -69,6 +69,7 @@
         - if row_vls.present?
           - z = exp_rows.select { |num| num[2] == row_type } # {59=>"ss"¸ 60=>"dd}
           - Hash[z.map {|n,z| [n, z]}].each do |row_id, row_name| 
+            - set_sum(row_type, row_vls[row_id])
             %td#popoverData
               %a{"data-content" => "#{row_name}", "data-original-title" => "кОЛОНКА", "data-placement" => "bottom", "data-trigger" => "hover", :href => "#", :rel => "popover"}= row_vls[row_id]
         - else
@@ -102,9 +103,15 @@
 %h3 Total
 %table.table.histories
   %tr
+    %td
+    %td
+    %td
+    %td
+    %td
+    %td
     - shifts_sum.each do |type, vls|
-      %td 
-        %a{"data-content" => "#{Hash[TYPES.map {|n,z| [z, n]}][type]}", "data-original-title" => "кОЛОНКА", "data-placement" => "bottom", "data-trigger" => "hover", :href => "#", :rel => "popover"}= vls
+      %td#popoverData 
+        %a{"data-content" => "#{Hash[ShiftRow::TYPES.map {|n,z| [z, n]}][type]}", "data-original-title" => "кОЛОНКА", "data-placement" => "top", "data-trigger" => "hover", :href => "#", :rel => "popover"}= vls
 
 :javascript
   $('#popoverData a').popover();

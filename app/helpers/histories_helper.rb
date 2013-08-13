@@ -1,12 +1,15 @@
 module HistoriesHelper
-  mattr_reader :shifts_sum
 
+  def shifts_sum
+    @shifts_sum
+  end
   def set_sum(type, vls)
-    @@shifts_sum = {} unless @@shifts_sum.class == Hash 
-    if @@shifts_sum[type].present?
-      @@shifts_sum[type] =+ vls
+    @shifts_sum = {} if @shifts_sum.nil?
+    sums = shifts_sum
+    if sums[type].present? && vls.present?
+       sums[type] += vls
     else
-      @@shifts_sum[type] = vls
+       sums[type] = vls if vls.present?
     end
   end
 end
