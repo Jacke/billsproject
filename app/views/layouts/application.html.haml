@@ -10,13 +10,6 @@
   %body
     / /= notice
     / / %p= alert
-    %div.container
-      %div.span5
-        %p
-          %strong 4) столбцы со статьями расхода не находятся четко друг под другом и НЕ считается общая сумма каждой колонки за период времени (в этом собственно весь смысл сайта, и это не реализовано)
-        %p 5) не работает выставить депозит
-        %p 6) зарплата которая (CashoutNow) не падает в депозит
-        %p Revert feature
     %header.container
       - if current_employee.present?
         .navbar.navbar-inverse.span4
