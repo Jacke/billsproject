@@ -56,8 +56,10 @@
       - shift.shift_row_assigns.each do |as|
         - if as.shift_row.present? && as.shift_row.row_type == 1
           %td#popoverData
-            %a{"data-content" => "#{as.shift_row.title}", "data-original-title" => "Колонка", "data-placement" => "bottom", "data-trigger" => "hover", :href => "#", :rel => "popover"}= as.def
-
+            %a{"data-content" => "#{row_name}", "data-original-title" => "кОЛОНКА", "data-placement" => "bottom", "data-trigger" => "hover", :href => "#", :rel => "popover"}= as.def
+            - diffs << as.def if as.shift_row.row_type == 6 || as.shift_row.row_type == 1
+        / /- else
+        / /  %td
       - ### Expenses rows
       - exp_rows = ShiftRow.where('row_type != 6 AND row_type != 1 AND site_id IS NULL').collect {|r| [r.id,  "#{r.title}", r.row_type ] }
       - @rows_hash = Hash[exp_rows.map {|n,z| [n, z]}]
@@ -71,7 +73,7 @@
       %td 
     %tr.last
       %td 
-        %b �b tatata
+        %b Итого
       %td
       %td
         - if shift.balance.present? && @hoar.select {|n| n.shift_id == shift.id }[0].present? 
