@@ -52,6 +52,15 @@
       %td= @hoar.select {|n| n.shift_id == shift.id }[0].balance if @hoar.select {|n| n.shift_id == shift.id }[0].present?
       %td= @hoar.select {|n| n.shift_id == shift.id }[0].till  if @hoar.select {|n| n.shift_id == shift.id }[0].present?
       %td= shift.cancel_at
+      - ### Balance rows
+      - shift.shift_row_assigns.each do |as|
+        - if as.shift_row.present? && as.shift_row.row_type == 1
+          %td#popoverData
+            %a{"data-content" => "#{as.shift_row.title}", "data-original-title" => "Колонка", "data-placement" => "bottom", "data-trigger" => "hover", :href => "#", :rel => "popover"}= as.def
+            - diffs << as.def if as.shift_row.row_type == 6 || as.shift_row.row_type == 1
+        / /- else
+        / /  %td
+      - ### Expenses rows
       - exp_rows = ShiftRow.where('row_type != 6 AND row_type != 1 AND site_id IS NULL').collect {|r| [r.id,  "#{r.title}", r.row_type ] }
       - row_vls = ShiftRowAssign.where(shift_id: shift.id).to_a.each_with_object({}){ |c,h| h[c.shift_row_id] = c.def }
       
@@ -65,14 +74,6 @@
         - else
           %td#popoverData
             %a{"data-content" => "#{row_type}", "data-original-title" => "тИП", "data-placement" => "bottom", "data-trigger" => "hover", :href => "#", :rel => "popover"} 0
-      
-      - shift.shift_row_assigns.each do |as|
-        - if as.shift_row.present? && as.shift_row.row_type == 1
-          %td#popoverData
-            %a{"data-content" => "#{as.shift_row.title}", "data-original-title" => "Колонка", "data-placement" => "bottom", "data-trigger" => "hover", :href => "#", :rel => "popover"}= as.def
-            - diffs << as.def if as.shift_row.row_type == 6 || as.shift_row.row_type == 1
-        / /- else
-        / /  %td
       %td
       %td 
     %tr.last
@@ -99,6 +100,11 @@
         = link_to '', shift, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'fui-cross'
 %br
 %h3 Total
+%table.table.histories
+  %tr
+    - shifts_sum.each do |type, vls|
+      %td 
+        %a{"data-content" => "#{Hash[TYPES.map {|n,z| [z, n]}][type]}", "data-original-title" => "кОЛОНКА", "data-placement" => "bottom", "data-trigger" => "hover", :href => "#", :rel => "popover"}= vls
 
 :javascript
   $('#popoverData a').popover();
