@@ -63,7 +63,7 @@
       - ### Expenses rows
       - exp_rows = ShiftRow.where('row_type != 6 AND row_type != 1 AND site_id IS NULL').collect {|r| [r.id,  "#{r.title}", r.row_type ] }
       - @rows_hash = Hash[exp_rows.map {|n,z| [n, z]}]
-      -# collect shift_row ids by specific row_type
+      / / collect shift_row ids by specific row_type
       - shift.shift_row_assigns.each do |as|
         - if as.shift_row.present? && as.shift_row.row_type != 1 && as.shift_row.row_type != 6
           - set_sum(as.def, as.shift_row.id)
@@ -95,6 +95,7 @@
         = link_to '', shift, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'fui-cross'
 %br
 %h3 Total
+
 %table.table.histories
   %tr
     - shifts_sum.each do |type, vls|
