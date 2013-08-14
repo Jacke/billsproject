@@ -77,12 +77,14 @@
       %td
       - if shift.balance.present? && @hoar.select {|n| n.shift_id == shift.id }[0].present? 
         %td= @hoar.select {|n| n.shift_id == shift.id }[0].balance - shift.balance 
+        - set_ndi(@hoar.select {|n| n.shift_id == shift.id }[0].balance - shift.balance)
       %td
   
       %td
       - shift.shift_row_assigns.each do |as|
         - if as.shift_row.present? && as.shift_row.row_type == 6 #|| as.shift_row.row_type == 1
           %td= diffs.inject(:-).to_i
+          - set_diffsum(as.shift_row.id, diffs.inject(:-).to_i)
       %td
       %td
       %td
@@ -97,9 +99,13 @@
 
 %table.table.histories
   %tr
+    %%th Diff initial balance
+    %th 
     - shifts_sum.each do |type, vls|
       %th= @rows_hash[type]
   %tr
+    %td= native_diff
+    %td= diffsum
     - shifts_sum.each do |type, vls|
       %td#popoverData 
         %a{"data-content" => "#{@rows_hash[type]}", "data-original-title" => "кОЛОНКА", "data-placement" => "top", "data-trigger" => "hover", :href => "#", :rel => "popover"}= vls
