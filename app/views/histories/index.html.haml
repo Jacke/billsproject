@@ -24,8 +24,8 @@
     %th Касса
     %th Сдано / Принято
     // Count of headers
-    - count = @shifts.joins("LEFT OUTER JOIN shift_row_assigns on shifts.id=shift_row_assigns.shift_id").group("shifts.id").count("shift_row_assigns.id").max[1]
-    - count.times do |th|
+    - @count = @shifts.joins("LEFT OUTER JOIN shift_row_assigns on shifts.id=shift_row_assigns.shift_id").group("shifts.id").count("shift_row_assigns.id").max[1]
+    - @count.times do |th|
       %th
     %th
     %th 
@@ -60,7 +60,7 @@
             - diffs << as.def if as.shift_row.row_type == 6 || as.shift_row.row_type == 1
 
       - ### Expenses rows
-      - exp_rows = ShiftRow.where('row_type != 6 AND row_type != 1 AND site_id IS NULL').collect {|r| [r.id,  "#{r.title}", r.row_type ] }
+      - exp_rows = ShiftRow.where('row_type != 1 AND site_id IS NULL').collect {|r| [r.id,  "#{r.title}", r.row_type ] }
       - @rows_hash = Hash[exp_rows.map {|n,z| [n, z]}]
 
       - shift.shift_row_assigns.each do |as|
@@ -76,22 +76,23 @@
       %td
       %td
       - if shift.balance.present? && @hoar.select {|n| n.shift_id == shift.id }[0].present? 
-        %td= @hoar.select {|n| n.shift_id == shift.id }[0].balance - shift.balance 
+        //%td= @hoar.select {|n| n.shift_id == shift.id }[0].balance - shift.balance 
         - set_ndi(@hoar.select {|n| n.shift_id == shift.id }[0].balance - shift.balance)
       %td
   
       %td
       - shift.shift_row_assigns.each do |as|
         - if as.shift_row.present? && as.shift_row.row_type == 6 #|| as.shift_row.row_type == 1
-          %td= diffs.inject(:-).to_i
+          / /%td= diffs.inject(:-).to_i
           - set_diffsum(as.shift_row.id, diffs.inject(:-).to_i)
       %td
       %td
       %td
+      - @count.times do |th|
+        %td
       %td
       %td
       %td
-      %td 
         = link_to '', edit_history_path(shift), class: 'fui-new'
         = link_to '', shift, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'fui-cross'
 %br
@@ -99,13 +100,15 @@
 
 %table.table.histories
   %tr
-    %%th Diff initial balance
-    %th 
+    %th Diff initial balance
+    - diffsum.each do |type, vls|
+      %th= @rows_hash[type]
     - shifts_sum.each do |type, vls|
       %th= @rows_hash[type]
   %tr
     %td= native_diff
-    %td= diffsum
+    - diffsum.each do |type, vls|
+      %td= vls
     - shifts_sum.each do |type, vls|
       %td#popoverData 
         %a{"data-content" => "#{@rows_hash[type]}", "data-original-title" => "кОЛОНКА", "data-placement" => "top", "data-trigger" => "hover", :href => "#", :rel => "popover"}= vls
