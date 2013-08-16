@@ -24,7 +24,8 @@
     %th Касса
     %th Сдано / Принято
     // Count of headers
-    - @count = @shifts.joins("LEFT OUTER JOIN shift_row_assigns on shifts.id=shift_row_assigns.shift_id").group("shifts.id").count("shift_row_assigns.id").max[1]
+    - count = @shifts.joins("LEFT OUTER JOIN shift_row_assigns on shifts.id=shift_row_assigns.shift_id").group("shifts.id").count("shift_row_assigns.id")
+    - @count = count.present? ? count.max[1] : 0 
     - @count.times do |th|
       %th
     %th
@@ -101,17 +102,21 @@
 %table.table.histories
   %tr
     %th Diff initial balance
-    - diffsum.each do |type, vls|
-      %th= @rows_hash[type]
-    - shifts_sum.each do |type, vls|
-      %th= @rows_hash[type]
+    - if diffsum.present?
+      - diffsum.each do |type, vls|
+        %th= @rows_hash[type]
+    - if shifts_sum.present?
+      - shifts_sum.each do |type, vls|
+        %th= @rows_hash[type]
   %tr
     %td= native_diff
-    - diffsum.each do |type, vls|
-      %td= vls
-    - shifts_sum.each do |type, vls|
-      %td#popoverData 
-        %a{"data-content" => "#{@rows_hash[type]}", "data-original-title" => "кОЛОНКА", "data-placement" => "top", "data-trigger" => "hover", :href => "#", :rel => "popover"}= vls
+    - if diffsum.present?
+      - diffsum.each do |type, vls|
+        %td= vls
+    - if shifts_sum.present?
+      - shifts_sum.each do |type, vls|
+        %td#popoverData 
+          %a{"data-content" => "#{@rows_hash[type]}", "data-original-title" => "кОЛОНКА", "data-placement" => "top", "data-trigger" => "hover", :href => "#", :rel => "popover"}= vls
 
 :javascript
   $('#popoverData a').popover();
